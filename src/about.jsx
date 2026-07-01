@@ -189,12 +189,12 @@ const ISO_BUILDINGS = [
   {
     id: "relay-east",
     name: "Digital Media Hub",
-    role: "OTT & Streaming Distribution",
+    role: "Original Streaming Platform",
     u: 6, v: 1, w: 1.5, l: 1.5, h: 110,
     diagnostic: [
       { label: "Platform", value: "Pellucid Play CDN" },
       { label: "Concurrent Streams", value: "142K Active" },
-      { label: "Status", value: "ACTIVE" },
+      { label: "Status", value: "IN DEVELOPMENT" },
       { label: "Stream Latency", value: "14 ms" },
       { label: "Avg Bandwidth", value: "8.2 Gbps" }
     ]

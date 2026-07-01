@@ -1,0 +1,11 @@
+{
+  "name": "pellucid-frames-website",
+  "version": "1.0.0",
+  "description": "Pellucid Frames official website development server",
+  "scripts": {
+    "dev": "npx http-server -p 8080 -c-1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

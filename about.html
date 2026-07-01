@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Pellucid Frames</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* ============================================================
+       About — Alternative editorial layout (Studio Herrström vibe)
+       Pellucid palette: --ink / --paper / --volt + opacity scale.
+       ============================================================ */
+    .ah-page {
+      background: var(--ink);
+      color: var(--paper);
+      overflow-x: hidden;
+    }
+    .ah-page .mono {
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* ── Scroll reveal ── */
+    .ah-page [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ah-page [data-reveal].in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Hero entrance stagger ── */
+    .ah-hero-stagger-1[data-reveal] { transition-delay: 0.05s; }
+    .ah-hero-stagger-2[data-reveal] { transition-delay: 0.2s; }
+    .ah-hero-stagger-3[data-reveal] { transition-delay: 0.38s; }
+
+    /* ── Section divider line draw ── */
+    .ah-row,
+    .ah-band { position: relative; border-bottom: none; }
+    .ah-section-line[data-reveal] {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--line);
+      opacity: 1 !important;
+      transform: scaleX(0) !important;
+      transform-origin: left;
+      transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .ah-section-line[data-reveal].in {
+      transform: scaleX(1) !important;
+    }
+
+    /* ── Figure clip-path curtain reveal ── */
+    .ah-figure[data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .ah-figure[data-reveal] img {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    }
+    .ah-figure[data-reveal].in img {
+      clip-path: inset(0% 0 0 0);
+    }
+
+    /* ── Services stagger ── */
+    .ah-services[data-reveal] .ah-service {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ah-services[data-reveal].in .ah-service:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.05s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.12s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.19s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.26s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.33s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.40s; }
+
+    /* ── Closing word split ── */
+    .ah-closing-big[data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .ah-word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+    .ah-word-inner {
+      display: inline-block;
+      transform: translateY(110%);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--d, 0s);
+    }
+    .ah-closing-big[data-reveal].in .ah-word-inner {
+      transform: translateY(0);
+    }
+    .ah-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    /* ---------- Hero ---------- */
+    .ah-hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      padding: clamp(120px, 16vh, 200px) clamp(24px, 6vw, 80px) clamp(36px, 6vh, 64px);
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .ah-hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.20;
+      filter: grayscale(1) contrast(1.08) brightness(0.85);
+      pointer-events: none;
+    }
+    .ah-hero-scrim {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(120% 90% at 15% 100%, rgba(0,0,0,0.35), transparent 70%),
+        linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+    }
+    .ah-hero-inner {
+      position: relative;
+      width: 100%;
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+    .ah-hero-eyebrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+      padding-bottom: clamp(28px, 5vh, 56px);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: clamp(28px, 5vh, 56px);
+    }
+    .ah-hero-statement {
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(48px, 11vw, 184px);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .ah-accent { color: var(--volt); }
+    .ah-hero-meta {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-top: clamp(36px, 6vh, 72px);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+    }
+
+    /* ---------- Oversized statement band ---------- */
+    .ah-band {
+      padding: clamp(88px, 16vh, 220px) clamp(24px, 6vw, 80px);
+      max-width: 1480px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--line);
+    }
+    .ah-band-index {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--volt);
+      margin-bottom: clamp(20px, 3vw, 40px);
+    }
+    .ah-band-text {
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(38px, 8.5vw, 150px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    /* ---------- Editorial rows ---------- */
+    .ah-row {
+      display: grid;
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 8.8fr);
+      gap: clamp(28px, 5vw, 96px);
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: clamp(64px, 11vh, 150px) clamp(24px, 6vw, 80px);
+      border-bottom: 1px solid var(--line);
+    }
+    .ah-row-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: sticky;
+      top: 110px;
+      align-self: start;
+    }
+    .ah-row-index {
+      font-size: clamp(28px, 3vw, 48px);
+      font-weight: 500;
+      color: var(--volt);
+      line-height: 1;
+    }
+    .ah-row-label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+    }
+    .ah-row-main { min-width: 0; }
+    .ah-lead {
+      font-family: "Geologica", sans-serif;
+      font-weight: 300;
+      font-size: clamp(22px, 2.8vw, 44px);
+      line-height: 1.28;
+      letter-spacing: -0.012em;
+      margin: 0;
+      text-wrap: pretty;
+    }
+    .ah-strong { font-weight: 600; color: var(--paper); }
+
+    /* ---------- Services list ---------- */
+    .ah-services {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(24px, 4vw, 64px);
+      margin-top: clamp(40px, 6vw, 72px);
+      border-top: 1px solid var(--line);
+    }
+    .ah-service {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: clamp(16px, 1.6vw, 22px) 0;
+      border-bottom: 1px solid var(--line);
+      cursor: default;
+    }
+    .ah-service-num {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--volt);
+      flex: 0 0 auto;
+    }
+    .ah-service-name {
+      font-family: "Geologica", sans-serif;
+      font-weight: 500;
+      font-size: clamp(17px, 1.7vw, 24px);
+      letter-spacing: -0.01em;
+      flex: 1 1 auto;
+    }
+    .ah-service-arrow {
+      color: var(--paper-25);
+      transform: translateX(-6px);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s, color 0.3s;
+    }
+    .ah-service:hover .ah-service-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--volt);
+    }
+    .ah-service:hover .ah-service-name { color: var(--volt); transition: color 0.3s; }
+
+    /* ---------- Figures ---------- */
+    .ah-figure {
+      margin: clamp(40px, 6vw, 72px) 0 0;
+    }
+    .ah-figure img {
+      width: 100%;
+      display: block;
+      filter: grayscale(1) contrast(1.05);
+    }
+    .ah-figure figcaption {
+      margin-top: 14px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+    }
+
+    /* ---------- Closing ---------- */
+    .ah-closing {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: clamp(110px, 20vh, 280px) clamp(24px, 6vw, 80px);
+    }
+    .ah-closing-pre {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--volt);
+      margin-bottom: clamp(24px, 4vw, 48px);
+    }
+    .ah-closing-big {
+      font-family: "Geologica", sans-serif;
+      font-weight: 900;
+      font-size: clamp(40px, 7.5vw, 130px);
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .ah-closing-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: clamp(48px, 8vw, 96px);
+      font-family: "Geologica", sans-serif;
+      font-weight: 500;
+      font-size: clamp(20px, 2.4vw, 34px);
+      letter-spacing: -0.01em;
+      color: var(--paper);
+      text-decoration: none;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--paper-25);
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .ah-closing-cta-arrow { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .ah-closing-cta:hover { color: var(--volt); border-color: var(--volt); }
+    .ah-closing-cta:hover .ah-closing-cta-arrow { transform: translateX(10px); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .ah-row {
+        grid-template-columns: 1fr;
+        gap: clamp(24px, 6vw, 40px);
+      }
+      .ah-row-aside {
+        position: static;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 14px;
+      }
+      .ah-row-index { font-size: 22px; }
+      .ah-services { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .ah-hero-statement { font-size: clamp(44px, 15vw, 80px); }
+      .ah-band-text { font-size: clamp(34px, 12vw, 72px); }
+      .ah-closing-big { font-size: clamp(30px, 8vw, 52px); }
+    }
+
+    /* ============================================================
+       Isometric City Animation Styles
+       ============================================================ */
+    .iso-city-container {
+      position: relative;
+      width: 100%;
+      background: transparent;
+      overflow: hidden;
+      margin-top: 28px;
+    }
+    .iso-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .iso-grid-line {
+      stroke: var(--paper-06);
+      stroke-width: 0.8px;
+    }
+    .iso-grid-axis {
+      stroke: var(--paper-25);
+      stroke-width: 1px;
+    }
+    .iso-grid-text {
+      fill: var(--paper-50);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+    }
+    .iso-building-face-left {
+      fill: rgba(0, 0, 0, 0.85);
+      stroke: var(--paper-12);
+      stroke-width: 0.8px;
+      transition: fill 0.3s, stroke 0.3s;
+    }
+    .iso-building-face-right {
+      fill: rgba(0, 0, 0, 0.75);
+      stroke: var(--paper-12);
+      stroke-width: 0.8px;
+      transition: fill 0.3s, stroke 0.3s;
+    }
+    .iso-building-face-top {
+      fill: rgba(0, 0, 0, 0.65);
+      stroke: var(--paper-12);
+      stroke-width: 0.8px;
+      transition: fill 0.3s, stroke 0.3s;
+    }
+    .iso-building {
+      cursor: pointer;
+    }
+    .iso-building.is-hovered .iso-building-face-left,
+    .iso-building.is-highlighted .iso-building-face-left {
+      stroke: var(--volt) !important;
+      fill: rgba(253, 218, 16, 0.04) !important;
+    }
+    .iso-building.is-hovered .iso-building-face-right,
+    .iso-building.is-highlighted .iso-building-face-right {
+      stroke: var(--volt) !important;
+      fill: rgba(253, 218, 16, 0.08) !important;
+    }
+    .iso-building.is-hovered .iso-building-face-top,
+    .iso-building.is-highlighted .iso-building-face-top {
+      stroke: var(--volt) !important;
+      fill: rgba(253, 218, 16, 0.12) !important;
+    }
+    .iso-win-dot {
+      fill: var(--paper-50);
+      transition: fill 0.3s;
+      animation: isoWinTwinkle 4s ease-in-out infinite;
+    }
+    .iso-building.is-hovered .iso-win-dot,
+    .iso-building.is-highlighted .iso-win-dot {
+      fill: var(--volt) !important;
+    }
+    @keyframes isoWinTwinkle {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.9; }
+    }
+    .iso-pulse-circle {
+      fill: none;
+      stroke: var(--volt);
+      stroke-width: 1px;
+      opacity: 0;
+      transform-origin: center;
+      animation: isoPulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+    @keyframes isoPulse {
+      0% {
+        r: 2px;
+        opacity: 0.8;
+      }
+      100% {
+        r: 60px;
+        opacity: 0;
+      }
+    }
+    .iso-packet {
+      fill: var(--volt);
+      filter: drop-shadow(0 0 3px var(--volt));
+    }
+    .iso-packet-line {
+      fill: none;
+      stroke: rgba(249, 239, 232, 0.05);
+      stroke-width: 0.8px;
+      stroke-dasharray: 4, 4;
+    }
+    .iso-hud-box {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 240px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid var(--paper-12);
+      border-top: 3px solid var(--volt);
+      padding: 16px;
+      color: var(--paper);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .iso-hud-box.is-visible {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .iso-hud-box .hud-header {
+      font-family: "Geologica", sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--paper-12);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .iso-hud-box .hud-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .iso-hud-box .hud-label {
+      color: var(--paper-50);
+      flex: 0 0 85px;
+      width: 85px;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+    }
+    .iso-hud-box .hud-value {
+      color: var(--paper);
+      flex: 1;
+      text-align: right;
+      word-break: break-word;
+    }
+    .iso-hud-box .hud-value.status-online {
+      color: var(--volt);
+      font-weight: 600;
+    }
+    .searchlight-group {
+      animation: searchlightSweep 8s ease-in-out infinite;
+    }
+    @keyframes searchlightSweep {
+      0%, 100% { transform: rotate(-18deg); }
+      50% { transform: rotate(18deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="ah-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=2"></script>
+  <script type="text/babel" src="src/app.jsx?v=2"></script>
+  <script type="text/babel" src="src/about.jsx?v=2"></script>
+</body>
+
+</html>

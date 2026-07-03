@@ -47,7 +47,8 @@ function MenuOverlay({ isOpen, onClose }) {
             <nav className="menu-primary-links">
               <a href="/#top"     className="stagger-2" onClick={onClose}>Home</a>
               <a href="/about.html"   className="stagger-3" onClick={onClose}>About Pellucid</a>
-              <a href="/#passage" className="stagger-4" onClick={onClose}>Why Pellucid</a>
+              <a href="/why-pellucid.html" className="stagger-4" onClick={onClose}>Why Pellucid</a>
+              <a href="/our-philosophy.html" className="stagger-5" onClick={onClose}>Our Philosophy</a>
               <a href="/#passage" className="stagger-5" onClick={onClose}>Who We Work With</a>
               <a href="/#passage" className="stagger-6" onClick={onClose}>Our Work</a>
               <a href="/#passage" className="stagger-7" onClick={onClose}>Looking Ahead</a>

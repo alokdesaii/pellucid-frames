@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Pellucid — Pellucid Frames</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    .wp-hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      overflow: hidden;
+      padding: clamp(24px, 6vw, 80px);
+    }
+
+    /* faint reference grid */
+    .wp-hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--paper-06) 1px, transparent 1px),
+        linear-gradient(90deg, var(--paper-06) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(120% 90% at 50% 50%, #000 20%, transparent 75%);
+      pointer-events: none;
+    }
+
+    /* concentric rings of thumbnails; each ring rotates around center, with
+       neighbouring rings spinning in opposite directions. Cards counter-rotate
+       so they stay upright, and outer rings fade toward the frame walls. */
+    .wp-vortex {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .wp-vortex-ring {
+      position: absolute;
+      inset: 0;
+      transform-origin: center;
+    }
+    .wp-vortex-ring.cw  { animation: wpRingCW  var(--spin) linear infinite; }
+    .wp-vortex-ring.ccw { animation: wpRingCCW var(--spin) linear infinite; }
+    @keyframes wpRingCW  { to { transform: rotate(360deg); } }
+    @keyframes wpRingCCW { to { transform: rotate(-360deg); } }
+
+    /* place each card at angle --th, pushed out to radius --rad, and oriented
+       radially (rotated by --th) so cards follow the circumference. Cards are
+       rigid to the ring, so each ring turns as one solid disc. */
+    .wp-orb {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: rotate(var(--th)) translateY(calc(-1 * var(--rad)));
+    }
+
+    .wp-card {
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      width: clamp(84px, 8.5vw, 150px);
+      aspect-ratio: 3 / 2;
+      transform: translate(-50%, -50%) scale(var(--scale));
+      opacity: var(--op);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0b0b0b;
+      border: 1px solid var(--paper-06);
+      box-shadow: 0 22px 54px -26px rgba(0, 0, 0, .95);
+      display: grid;
+      place-items: center;
+    }
+    .wp-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.82) saturate(.9);
+    }
+    .wp-card-ph {
+      font-size: 11px;
+      letter-spacing: .18em;
+      color: var(--paper-25);
+    }
+    /* deepen the fade near the frame walls */
+    .wp-vortex::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(120% 120% at 50% 50%, transparent 32%, var(--ink) 84%);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wp-vortex-ring { animation: none; }
+    }
+
+    .wp-hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 1200px;
+    }
+    .wp-eyebrow {
+      display: flex;
+      justify-content: center;
+      gap: clamp(16px, 4vw, 48px);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+      margin-bottom: clamp(24px, 4vh, 48px);
+    }
+    .wp-title {
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(40px, 7vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(2px, 0.6vw, 8px);
+    }
+    .wp-title-line { display: block; }
+    .wp-accent { color: var(--volt); }
+    .wp-sub {
+      margin-top: clamp(24px, 4vh, 48px);
+      font-size: clamp(12px, 1.4vw, 15px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+    }
+
+    /* ---------- Story sections below the hero ---------- */
+    .wp-section {
+      position: relative;
+      background: var(--ink);
+      color: var(--paper);
+      padding: clamp(88px, 16vh, 220px) clamp(24px, 7vw, 130px);
+    }
+    .wp-section-inner { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; }
+
+    /* faint column guide lines (6-col), reference-style */
+    .wp-colgrid {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: linear-gradient(90deg, var(--paper-06) 1px, transparent 1px);
+      background-size: calc(100% / 6) 100%;
+    }
+
+    .wp-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+      margin-bottom: clamp(24px, 4vh, 44px);
+    }
+    .wp-kicker::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--volt);
+    }
+    .wp-statement-h {
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(38px, 7.2vw, 108px);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      margin: 0 0 clamp(28px, 5vh, 56px);
+    }
+    .wp-lead {
+      font-weight: 300;
+      font-size: clamp(19px, 2.6vw, 34px);
+      line-height: 1.38;
+      letter-spacing: -0.01em;
+      color: var(--paper-50);
+      max-width: 24ch;
+      margin: 0;
+    }
+    .wp-lead b { color: var(--paper); font-weight: 400; }
+
+    /* full-bleed parallax image band */
+    .wp-parallax {
+      position: relative;
+      height: clamp(360px, 78vh, 820px);
+      overflow: hidden;
+      background: #070707;
+      display: grid;
+      place-items: center;
+    }
+    .wp-px-img {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: -20%;
+      height: 140%;
+      z-index: 0;
+      object-fit: cover;
+      will-change: transform;
+    }
+    .wp-px-heading {
+      position: relative;
+      z-index: 2;
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(38px, 8vw, 132px);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+      text-align: center;
+      max-width: 16ch;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 6vw, 90px);
+      text-shadow: 0 6px 44px rgba(0, 0, 0, .7);
+    }
+
+    /* three principles */
+    .wp-principles-intro {
+      font-weight: 300;
+      font-size: clamp(20px, 2.8vw, 36px);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+      max-width: 22ch;
+      margin: 0 0 clamp(40px, 7vh, 88px);
+    }
+    .wp-principle {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(16px, 4vw, 64px);
+      align-items: baseline;
+      padding: clamp(28px, 4.5vh, 52px) 0;
+      border-top: 1px solid var(--line);
+    }
+    .wp-principle:last-child { border-bottom: 1px solid var(--line); }
+    .wp-principle-name {
+      font-family: "Geologica", sans-serif;
+      font-weight: 700;
+      font-size: clamp(30px, 4.6vw, 68px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .wp-principle-num {
+      color: var(--volt);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.32em;
+      font-weight: 500;
+      vertical-align: super;
+      margin-right: 0.5em;
+    }
+    .wp-principle-desc {
+      font-weight: 300;
+      font-size: clamp(16px, 1.8vw, 22px);
+      line-height: 1.45;
+      color: var(--paper-50);
+      margin: 0;
+    }
+    @media (max-width: 720px) {
+      .wp-principle { grid-template-columns: 1fr; gap: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wp-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=2"></script>
+  <script type="text/babel" src="src/app.jsx?v=3"></script>
+  <script type="text/babel" src="src/why-pellucid.jsx?v=6"></script>
+</body>
+
+</html>

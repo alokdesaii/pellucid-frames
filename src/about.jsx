@@ -45,6 +45,17 @@ const AH_SERVICES = [
   "Creative Strategy"
 ];
 
+const AH_AUDIENCES = [
+  "Financial Institutions",
+  "Technology Companies",
+  "Startups & Founders",
+  "Professional Services Firms",
+  "Educational Organisations",
+  "Luxury & Lifestyle Brands",
+  "Public Institutions",
+  "Non-profit Organisations"
+];
+
 // A full-width oversized statement band.
 function StatementBand({ children, index }) {
   return (
@@ -626,6 +637,28 @@ function AboutHerrstromPage() {
         <figure className="ah-figure" data-reveal>
           <IsometricCity />
         </figure>
+      </EditorialRow>
+
+      {/* ── Row 04 — Who we work with ──────────────────────── */}
+      <EditorialRow index="04" label="Who we work with">
+        <p className="ah-lead">
+          We partner with organisations and creators who value
+          <span className="ah-strong"> meaningful communication.</span>
+        </p>
+        <div className="ah-services" data-reveal>
+          {AH_AUDIENCES.map((s, i) => (
+            <div key={i} className="ah-service">
+              <span className="ah-service-num mono">{String(i + 1).padStart(2, "0")}</span>
+              <span className="ah-service-name">{s}</span>
+              <span className="ah-service-arrow" aria-hidden="true">→</span>
+            </div>
+          ))}
+        </div>
+        <p className="ah-support" data-reveal>
+          Whether you're launching a business, educating customers or telling your
+          company's story, we help <span className="ah-strong">transform ideas into
+          memorable experiences.</span>
+        </p>
       </EditorialRow>
 
       {/* ── Closing principle ──────────────────────────────── */}

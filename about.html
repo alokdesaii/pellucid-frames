@@ -97,6 +97,8 @@
     .ah-services[data-reveal].in .ah-service:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.26s; }
     .ah-services[data-reveal].in .ah-service:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.33s; }
     .ah-services[data-reveal].in .ah-service:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.40s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(7) { opacity: 1; transform: none; transition-delay: 0.47s; }
+    .ah-services[data-reveal].in .ah-service:nth-child(8) { opacity: 1; transform: none; transition-delay: 0.54s; }
 
     /* ── Closing word split ── */
     .ah-closing-big[data-reveal] {
@@ -299,6 +301,19 @@
       color: var(--volt);
     }
     .ah-service:hover .ah-service-name { color: var(--volt); transition: color 0.3s; }
+
+    /* supporting note under a row's content */
+    .ah-support {
+      margin: clamp(36px, 5vw, 60px) 0 0;
+      max-width: 62ch;
+      font-family: "Geologica", sans-serif;
+      font-weight: 300;
+      font-size: clamp(16px, 1.5vw, 21px);
+      line-height: 1.55;
+      color: var(--paper-50);
+      text-wrap: pretty;
+    }
+    .ah-support .ah-strong { color: var(--paper); }
 
     /* ---------- Figures ---------- */
     .ah-figure {
@@ -570,8 +585,8 @@
 
   <script type="text/babel" src="src/icons.jsx"></script>
   <script type="text/babel" src="src/footer.jsx?v=2"></script>
-  <script type="text/babel" src="src/app.jsx?v=2"></script>
-  <script type="text/babel" src="src/about.jsx?v=2"></script>
+  <script type="text/babel" src="src/app.jsx?v=3"></script>
+  <script type="text/babel" src="src/about.jsx?v=3"></script>
 </body>
 
 </html>

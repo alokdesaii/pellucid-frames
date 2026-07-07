@@ -342,49 +342,82 @@
     }
 
     /* ---------- Menu Button & Overlay ---------- */
+    /* ghost menu button: fill-sweep + text vertical-swap + burger line-wipe on hover */
     .nav-menu-btn {
+      position: relative;
       display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      align-items: stretch;
+      padding: 0;
       background: transparent;
       border: 1px solid var(--paper-25);
-      padding: 9px 18px;
-      border-radius: 999px;
+      border-radius: 0;
       color: var(--paper);
       cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+      overflow: hidden;
       z-index: 60;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      --menu-ease: cubic-bezier(0.76, 0, 0.24, 1);
+      transition: border-color 0.3s ease;
     }
-    .nav-menu-btn:hover {
-      background: var(--paper-12);
-      border-color: var(--paper-50);
+    .nav-menu-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: var(--volt);
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
-    .menu-burger {
+    .nav-menu-btn:hover { border-color: var(--volt); }
+    .nav-menu-btn:hover::before { opacity: 1; }
+
+    /* text cell — "MENU" swaps up on hover, duplicate drops in from above */
+    .nav-menu-text {
       position: relative;
-      width: 16px;
-      height: 12px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      padding: 13px 18px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .nav-menu-btn:hover .nav-menu-text { color: var(--ink); }
+    .nav-menu-swap { position: relative; display: inline-block; overflow: hidden; line-height: 1; }
+    .nav-menu-sp { display: block; transition: transform 0.6s var(--menu-ease); }
+    .nav-menu-sp2 { position: absolute; left: 0; top: -100%; }
+    .nav-menu-btn:hover .nav-menu-sp { transform: translateY(100%); }
+
+    /* icon cell — two lines, each wipes: old slides out right, new wipes in left */
+    .nav-menu-icon {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 16px;
+      border-left: 1px solid var(--paper-25);
+      transition: border-color 0.3s ease;
     }
-    .burger-line {
-      display: block;
-      width: 100%;
-      height: 1px;
+    .nav-menu-btn:hover .nav-menu-icon { border-color: rgba(0, 0, 0, 0.28); }
+    .nav-menu-line { position: relative; overflow: hidden; width: 22px; height: 2px; }
+    .nav-menu-line::before, .nav-menu-line::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: var(--paper);
-      transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1), background-color 0.5s;
-      transform-origin: center;
     }
-    .menu-active .line-1 {
-      transform: translateY(5.5px) rotate(45deg);
-    }
-    .menu-active .line-2 {
-      transform: translateY(-5.5px) rotate(-45deg);
-    }
-    .menu-btn-text {
-      font-size: 11px;
-      letter-spacing: .08em;
-      font-weight: 500;
+    .nav-menu-line::before { transform: translateX(0); transition: transform 0.6s var(--menu-ease) 0.2s, background-color 0.3s ease; }
+    .nav-menu-line::after { transform: translateX(-100%); transition: transform 0.6s var(--menu-ease), background-color 0.3s ease; }
+    .nav-menu-btn:hover .nav-menu-line::before { transform: translateX(100%); background: var(--ink); }
+    .nav-menu-btn:hover .nav-menu-line::after { transform: translateX(0); background: var(--ink); }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-menu-sp, .nav-menu-line::before, .nav-menu-line::after { transition: background-color 0.3s ease; }
     }
 
     /* ---- Mega menu overlay ---- */
@@ -406,41 +439,77 @@
     }
 
     /* Close button */
+    /* close button — mirrors the menu button (sharp ghost + fill sweep + text
+       swap), toned for the volt panel it sits on: ink accents, inverting on hover */
     .menu-close-btn {
       position: absolute;
       top: 24px;
       right: clamp(20px, 4vw, 48px);
       z-index: 10;
       display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      align-items: stretch;
+      padding: 0;
       background: transparent;
-      border: 1px solid rgba(0, 0, 0, 0.35);
-      padding: 9px 18px;
-      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      border-radius: 0;
       color: #000;
       cursor: pointer;
-      transition: all 0.3s;
+      overflow: hidden;
+      --menu-ease: cubic-bezier(0.76, 0, 0.24, 1);
+      transition: border-color 0.3s ease;
     }
-    .menu-close-btn:hover {
-      background: rgba(0, 0, 0, 0.08);
-      border-color: #000;
-    }
-    .menu-close-icon {
-      position: relative;
-      width: 14px;
-      height: 14px;
-    }
-    .menu-close-icon span {
+    .menu-close-btn::before {
+      content: "";
       position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: #000;
+      inset: 0;
+      z-index: 0;
+      background: var(--ink);
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
-    .menu-close-icon span:first-child { transform: rotate(45deg); }
-    .menu-close-icon span:last-child  { transform: rotate(-45deg); }
+    .menu-close-btn:hover { border-color: var(--ink); }
+    .menu-close-btn:hover::before { opacity: 1; }
+    .mc-text {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      padding: 13px 18px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .menu-close-btn:hover .mc-text { color: var(--volt); }
+    .mc-swap { position: relative; display: inline-block; overflow: hidden; line-height: 1; }
+    .mc-sp { display: block; transition: transform 0.6s var(--menu-ease); }
+    .mc-sp2 { position: absolute; left: 0; top: -100%; }
+    .menu-close-btn:hover .mc-sp { transform: translateY(100%); }
+    .mc-icon {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 15px;
+      border-left: 1px solid rgba(0, 0, 0, 0.4);
+      transition: border-color 0.3s ease;
+    }
+    .menu-close-btn:hover .mc-icon { border-left-color: rgba(253, 218, 16, 0.4); }
+    .mc-x { position: relative; width: 16px; height: 16px; }
+    .mc-x::before, .mc-x::after {
+      content: "";
+      position: absolute;
+      top: 50%; left: 0;
+      width: 100%; height: 2px;
+      background: #000;
+      transition: background-color 0.3s ease;
+    }
+    .mc-x::before { transform: rotate(45deg); }
+    .mc-x::after { transform: rotate(-45deg); }
+    .menu-close-btn:hover .mc-x::before, .menu-close-btn:hover .mc-x::after { background: var(--volt); }
+    @media (prefers-reduced-motion: reduce) { .mc-sp { transition: none; } }
 
     /* Panel layout */
     .menu-panels {
@@ -484,6 +553,8 @@
       transition: opacity 0.45s cubic-bezier(0.32, 0.72, 0, 1), transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
     }
     .menu-overlay.open .menu-section-label { opacity: 1; transform: translateY(0); }
+    a.menu-section-link { display: inline-block; text-decoration: none; cursor: pointer; }
+    a.menu-section-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
     /* Divider */
     .menu-divider {
@@ -613,10 +684,16 @@
       .menu-panel-left   { flex: 0 0 50%; }
       .menu-panel-center { flex: 0 0 50%; }
       .menu-panel-right  { display: none; }
-      /* volt panel hidden → restore light close button on dark bg */
-      .menu-close-btn          { color: var(--paper); border-color: var(--paper-25); }
-      .menu-close-btn:hover    { background: var(--paper-12); border-color: var(--paper-50); }
-      .menu-close-icon span    { background: var(--paper); }
+      /* volt panel hidden → close button now on dark bg: match the menu button
+         (paper ghost, volt fill, ink accents on hover) */
+      .menu-close-btn        { color: var(--paper); border-color: var(--paper-25); }
+      .menu-close-btn:hover  { border-color: var(--volt); }
+      .menu-close-btn::before { background: var(--volt); }
+      .menu-close-btn:hover .mc-text { color: var(--ink); }
+      .mc-icon               { border-left-color: var(--paper-25); }
+      .menu-close-btn:hover .mc-icon { border-left-color: rgba(0, 0, 0, 0.28); }
+      .mc-x::before, .mc-x::after { background: var(--paper); }
+      .menu-close-btn:hover .mc-x::before, .menu-close-btn:hover .mc-x::after { background: var(--ink); }
     }
     @media (max-width: 640px) {
       .menu-panels { flex-direction: column; overflow-y: auto; overflow-x: hidden; }
@@ -1805,6 +1882,8 @@
       padding-bottom: 12px;
       border-bottom: 1px solid var(--paper-25);
     }
+    .sf-col-title a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .sf-col-title a:hover { color: var(--volt); }
 
     .sf-col-links {
       display: flex;
@@ -2537,4 +2616,53 @@
       .count-num {
         animation: none !important;
       }
+    }
+
+    /* ============================================================
+       Legal / policy pages (shared) — sharp editorial, .lg-*
+       Used by legal.jsx via a per-page window.LEGAL_DOC object.
+       ============================================================ */
+    .lg-wrap { background: var(--ink); color: var(--paper); }
+    .lg-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 80px); }
+    .lg-head { padding: clamp(120px, 20vh, 220px) 0 clamp(44px, 7vh, 80px); border-bottom: 1px solid var(--line); }
+    .lg-eyebrow {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-50);
+      padding-bottom: clamp(24px, 4vh, 48px); border-bottom: 1px solid var(--line); margin-bottom: clamp(32px, 5vh, 60px);
+    }
+    .lg-title {
+      font-family: "Geologica", sans-serif; font-weight: 800;
+      font-size: clamp(36px, 5.6vw, 92px); line-height: 0.96; letter-spacing: -0.03em; margin: 0; text-wrap: balance;
+    }
+    .lg-lead {
+      font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(18px, 2vw, 28px);
+      line-height: 1.4; letter-spacing: -0.01em; color: var(--paper-50); margin: clamp(28px, 4vh, 44px) 0 0; max-width: 46ch;
+    }
+    .lg-body { padding-bottom: clamp(80px, 14vh, 160px); }
+    .lg-section {
+      display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+      gap: clamp(24px, 5vw, 88px); align-items: start;
+      padding: clamp(36px, 5.5vh, 64px) 0; border-bottom: 1px solid var(--line);
+    }
+    .lg-h { font-family: "Geologica", sans-serif; font-weight: 700; font-size: clamp(20px, 2.2vw, 34px); line-height: 1.1; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+    .lg-content { min-width: 0; }
+    .lg-p { font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(16px, 1.35vw, 20px); line-height: 1.6; color: var(--paper-50); margin: 0; max-width: 66ch; text-wrap: pretty; }
+    .lg-p + .lg-p { margin-top: 1em; }
+    .lg-p b { color: var(--paper); font-weight: 500; }
+    .lg-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    .lg-content > .lg-p + .lg-list { margin-top: clamp(16px, 2.4vh, 24px); }
+    .lg-list li {
+      position: relative; padding-left: 28px;
+      font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.5; color: var(--paper-50);
+    }
+    .lg-list li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 14px; height: 1px; background: var(--volt); }
+    .lg-email {
+      display: inline-block; margin-top: clamp(12px, 2vh, 18px);
+      font-family: "Geologica", sans-serif; font-weight: 700; font-size: clamp(22px, 3vw, 40px);
+      letter-spacing: -0.025em; color: var(--paper); text-decoration: none; transition: color 0.3s; word-break: break-word;
+    }
+    .lg-email:hover { color: var(--volt); }
+    @media (max-width: 820px) {
+      .lg-section { grid-template-columns: 1fr; gap: clamp(14px, 4vw, 22px); }
     }

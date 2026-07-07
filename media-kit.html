@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Kit / Press Centre — Pellucid Frames</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* ===== Media Kit / Press Centre — pillar-style layout (Enerblock) ===== */
+    .mk-wrap { background: var(--ink); color: var(--paper); }
+    .mk-inner { max-width: 1500px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 80px); }
+
+    /* ---------- Hero (default hero: title top, crosshair + description bottom) ---------- */
+    .mk-hero { padding: clamp(120px, 20vh, 220px) 0 clamp(40px, 7vh, 80px); }
+    .mk-hero-eyebrow {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper-50);
+      padding-bottom: clamp(28px, 5vh, 56px); border-bottom: 1px solid var(--line); margin-bottom: clamp(40px, 7vh, 80px);
+    }
+    .mk-title {
+      font-family: "Geologica", sans-serif; font-weight: 800;
+      font-size: clamp(44px, 8vw, 148px); line-height: 0.92; letter-spacing: -0.04em; margin: 0; text-wrap: balance;
+    }
+    .mk-hero-bottom {
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 88px);
+      align-items: end; margin-top: clamp(48px, 9vh, 120px);
+    }
+    /* decorative crosshair with coordinate readout (Enerblock cross-hair) */
+    .mk-cross { position: relative; align-self: stretch; min-height: 120px; }
+    .mk-cross::before, .mk-cross::after { content: ""; position: absolute; background: var(--line); }
+    .mk-cross::before { left: 0; top: 0; bottom: 0; width: 1px; }
+    .mk-cross::after { left: 0; right: 0; top: 0; height: 1px; }
+    .mk-cross-x, .mk-cross-y { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--volt); }
+    .mk-cross-x { top: 8px; left: 12px; }
+    .mk-cross-y { bottom: 8px; left: 12px; }
+    .mk-hero-desc {
+      font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(20px, 2.4vw, 34px);
+      line-height: 1.3; letter-spacing: -0.01em; color: var(--paper-50); margin: 0; max-width: 34ch;
+    }
+    .mk-hero-desc b { color: var(--paper); font-weight: 600; }
+
+    /* ---------- Parallax band ---------- */
+    .mk-band { position: relative; height: clamp(340px, 66vh, 720px); overflow: hidden; background: #070707; }
+    .mk-band img { position: absolute; left: 0; top: -16%; width: 100%; height: 132%; object-fit: cover; filter: brightness(0.72); will-change: transform; }
+
+    /* ---------- Intro (bg ink, big statement + image) ---------- */
+    .mk-section { padding: clamp(80px, 14vh, 180px) 0; border-top: 1px solid var(--line); }
+    .mk-pretitle { display: inline-flex; align-items: center; gap: 12px; font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--volt); margin-bottom: clamp(24px, 4vh, 44px); }
+    .mk-intro-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 90px); align-items: center; }
+    .mk-statement {
+      font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(24px, 3vw, 48px);
+      line-height: 1.22; letter-spacing: -0.02em; margin: 0; color: var(--paper); text-wrap: pretty;
+    }
+    .mk-statement b { font-weight: 600; }
+    .mk-statement .mk-accent { color: var(--volt); font-weight: 600; }
+    .mk-intro-img { aspect-ratio: 4 / 5; overflow: hidden; border: 1px solid var(--paper-12); }
+    .mk-intro-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) saturate(0.92); }
+
+    /* ---------- Brands — numbered slide-up list ---------- */
+    .mk-sec-head { margin-bottom: clamp(40px, 7vh, 80px); }
+    .mk-h { font-family: "Geologica", sans-serif; font-weight: 800; font-size: clamp(30px, 4vw, 64px); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+    .mk-brands { border-top: 1px solid var(--line); }
+    .mk-brand {
+      display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr);
+      gap: clamp(20px, 4vw, 72px); align-items: center;
+      padding: clamp(32px, 5vh, 64px) 0; border-bottom: 1px solid var(--line);
+      text-decoration: none; color: var(--paper);
+    }
+    .mk-brand-num { overflow: hidden; font-family: "Geologica", sans-serif; font-weight: 700; color: var(--volt); font-size: clamp(48px, 6vw, 104px); line-height: 0.82; letter-spacing: -0.04em; }
+    .mk-brand-num span { display: block; transform: translateY(-100%); will-change: transform; }
+    .mk-brand-name { font-family: "Geologica", sans-serif; font-weight: 700; font-size: clamp(24px, 2.6vw, 44px); letter-spacing: -0.02em; transition: color 0.3s; }
+    .mk-brand:hover .mk-brand-name { color: var(--volt); }
+    .mk-brand-desc { font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(15px, 1.4vw, 21px); line-height: 1.45; color: var(--paper-50); }
+
+    /* ---------- Double image ---------- */
+    .mk-dbl { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 40px); }
+    .mk-dbl-img { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border: 1px solid var(--paper-12); }
+    .mk-dbl-img img { position: absolute; left: 0; top: -12%; width: 100%; height: 124%; object-fit: cover; filter: brightness(0.88) saturate(0.92); will-change: transform; }
+
+    /* ---------- Enquiries + assets ---------- */
+    .mk-two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 88px); align-items: start; }
+    .mk-p { font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(16px, 1.5vw, 22px); line-height: 1.5; color: var(--paper-50); margin: 0; max-width: 50ch; }
+    .mk-email {
+      display: inline-block; font-family: "Geologica", sans-serif; font-weight: 700;
+      font-size: clamp(26px, 4.2vw, 60px); letter-spacing: -0.03em; color: var(--paper);
+      text-decoration: none; margin-top: clamp(18px, 2.5vh, 28px); transition: color 0.3s; word-break: break-word;
+    }
+    .mk-email:hover { color: var(--volt); }
+    .mk-assets { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(22px, 3vh, 34px); }
+    .mk-chip { border: 1px solid var(--paper-25); padding: 10px 18px; font-family: "Geologica", sans-serif; font-weight: 500; font-size: clamp(14px, 1.1vw, 17px); color: var(--paper); }
+    .mk-btn {
+      display: inline-flex; align-items: center; gap: 14px; margin-top: clamp(32px, 5vh, 52px);
+      padding: 15px 22px; border: 1px solid var(--paper-25); background: var(--paper); color: var(--ink);
+      font-family: "Geologica", sans-serif; font-weight: 600; font-size: clamp(14px, 1.1vw, 17px);
+      letter-spacing: -0.01em; text-decoration: none; transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+    .mk-btn .mk-btn-arrow { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .mk-btn:hover { background: var(--volt); border-color: var(--volt); }
+    .mk-btn:hover .mk-btn-arrow { transform: translateX(6px); }
+
+    /* ---------- Reveal ---------- */
+    .mk-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mk-reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .mk-reveal { opacity: 1; transform: none; transition: none; }
+      .mk-brand-num span { transform: none; }
+    }
+
+    @media (max-width: 860px) {
+      .mk-hero-bottom, .mk-intro-grid, .mk-two { grid-template-columns: 1fr; gap: clamp(24px, 6vw, 40px); }
+      .mk-cross { display: none; }
+      .mk-brand { grid-template-columns: auto 1fr; gap: clamp(14px, 4vw, 28px); }
+      .mk-brand-desc { grid-column: 1 / -1; }
+      .mk-dbl { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="mk-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=10"></script>
+  <script type="text/babel" src="src/app.jsx?v=14"></script>
+  <script type="text/babel" src="src/media-kit.jsx?v=2"></script>
+</body>
+
+</html>

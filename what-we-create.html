@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What We Create — Pellucid Frames</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* ---------- What We Create — sharp grid/line language (from Contact) ---------- */
+    .wc-wrap { background: var(--ink); color: var(--paper); }
+
+    .wc-head {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: clamp(120px, 20vh, 220px) clamp(24px, 6vw, 80px) clamp(48px, 8vh, 88px);
+      border-bottom: 1px solid var(--line);
+    }
+    .wc-eyebrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--paper-50);
+      padding-bottom: clamp(28px, 5vh, 56px);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: clamp(28px, 5vh, 56px);
+    }
+    .wc-title {
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(52px, 9vw, 150px);
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      margin: 0;
+    }
+    .wc-lead {
+      font-family: "Geologica", sans-serif;
+      font-weight: 300;
+      font-size: clamp(20px, 2.6vw, 38px);
+      line-height: 1.28;
+      letter-spacing: -0.012em;
+      color: var(--paper-50);
+      max-width: 26ch;
+      margin: clamp(32px, 5vh, 56px) 0 0;
+    }
+    .wc-lead b { color: var(--paper); font-weight: 600; }
+
+    /* discipline stack — full-bleed sharp panels: 3 columns (number | image |
+       text) split by solid dividers, each sticks and the next overlaps it on
+       scroll with the horizontal seam as the transition (--i = index). */
+    .wc-stack { position: relative; }
+    .wc-panel {
+      position: sticky;
+      top: calc(clamp(60px, 9vh, 96px) + var(--i) * 12px);
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 6fr);
+      min-height: clamp(520px, 88vh, 940px);
+      background: var(--ink); /* opaque so a stacked panel fully covers */
+      border-top: 1px solid var(--line);
+    }
+    .wc-panel:last-child { border-bottom: 1px solid var(--line); }
+    .wc-col {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(28px, 3vw, 56px);
+      min-width: 0;
+    }
+    .wc-col--img, .wc-col--text { border-left: 1px solid var(--line); }
+    .wc-col--img { justify-content: flex-start; }
+
+    .wc-num {
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(14px, 1.4vw, 20px);
+      letter-spacing: 0.1em;
+      color: var(--paper);
+    }
+    .wc-num i { color: var(--volt); font-style: normal; margin-left: 8px; }
+
+    .wc-panel-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92) saturate(0.9);
+    }
+
+    .wc-ptitle {
+      font-family: "Geologica", sans-serif;
+      font-weight: 800;
+      font-size: clamp(28px, 3.4vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin: 0;
+      max-width: 15ch;
+      text-wrap: balance;
+    }
+    .wc-pdesc {
+      margin: clamp(20px, 2.6vh, 32px) 0 0;
+      font-family: "Geologica", sans-serif;
+      font-weight: 300;
+      font-size: clamp(16px, 1.35vw, 21px);
+      line-height: 1.5;
+      color: var(--paper-50);
+      max-width: 44ch;
+      text-wrap: pretty;
+    }
+
+    @media (max-width: 860px) {
+      .wc-panel {
+        position: static;
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+      .wc-col--img, .wc-col--text { border-left: none; border-top: 1px solid var(--line); }
+      .wc-panel-img { aspect-ratio: 16 / 10; }
+      .wc-pdesc { margin-top: clamp(20px, 4vh, 28px); padding-top: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wc-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=10"></script>
+  <script type="text/babel" src="src/app.jsx?v=14"></script>
+  <script type="text/babel" src="src/what-we-create.jsx?v=4"></script>
+</body>
+
+</html>

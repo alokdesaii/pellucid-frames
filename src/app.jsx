@@ -15,15 +15,20 @@ function Nav({ menuOpen, setMenuOpen }) {
       </a>
       
       <button
-        className={"nav-menu-btn " + (menuOpen ? "menu-active" : "")}
+        className="nav-menu-btn"
         onClick={() => setMenuOpen(!menuOpen)}
         aria-label="Toggle menu"
       >
-        <div className="menu-burger">
-          <span className="burger-line line-1" />
-          <span className="burger-line line-2" />
-        </div>
-        <span className="menu-btn-text mono">MENU</span>
+        <span className="nav-menu-text">
+          <span className="nav-menu-swap">
+            <span className="nav-menu-sp">MENU</span>
+            <span className="nav-menu-sp nav-menu-sp2" aria-hidden="true">MENU</span>
+          </span>
+        </span>
+        <span className="nav-menu-icon" aria-hidden="true">
+          <span className="nav-menu-line" />
+          <span className="nav-menu-line" />
+        </span>
       </button>
     </header>);
 }
@@ -34,8 +39,13 @@ function MenuOverlay({ isOpen, onClose }) {
 
       {/* Close button */}
       <button className="menu-close-btn" onClick={onClose} aria-label="Close menu">
-        <span className="menu-close-icon"><span /><span /></span>
-        <span className="mono" style={{fontSize:"11px", letterSpacing:".08em"}}>CLOSE</span>
+        <span className="mc-text">
+          <span className="mc-swap">
+            <span className="mc-sp">CLOSE</span>
+            <span className="mc-sp mc-sp2" aria-hidden="true">CLOSE</span>
+          </span>
+        </span>
+        <span className="mc-icon" aria-hidden="true"><span className="mc-x" /></span>
       </button>
 
       <div className="menu-panels">
@@ -49,10 +59,7 @@ function MenuOverlay({ isOpen, onClose }) {
               <a href="/about.html"   className="stagger-3" onClick={onClose}>About Pellucid</a>
               <a href="/why-pellucid.html" className="stagger-4" onClick={onClose}>Why Pellucid</a>
               <a href="/our-philosophy.html" className="stagger-5" onClick={onClose}>Our Philosophy</a>
-              <a href="/#passage" className="stagger-5" onClick={onClose}>Who We Work With</a>
-              <a href="/#passage" className="stagger-6" onClick={onClose}>Our Work</a>
-              <a href="/#passage" className="stagger-7" onClick={onClose}>Looking Ahead</a>
-              <a href="/#contact" className="stagger-8" onClick={onClose}>Contact</a>
+              <a href="/our-work.html" className="stagger-6" onClick={onClose}>Our Work</a>
             </nav>
           </div>
 
@@ -60,36 +67,36 @@ function MenuOverlay({ isOpen, onClose }) {
 
           <div>
             <div className="menu-section-label stagger-9">Our YouTube Channels</div>
-            <div className="menu-secondary-links" style={{marginTop:"12px"}}>
-              <a href="#" className="stagger-10" onClick={onClose}>CapitalShiftz</a>
-              <a href="#" className="stagger-10" onClick={onClose}>Bloomy Toony</a>
-            </div>
+            <nav className="menu-primary-links" style={{marginTop:"12px"}}>
+              <a href="/capital-shiftz.html" className="stagger-10" onClick={onClose}>CapitalShiftz</a>
+              <a href="/bloomy-toony.html" className="stagger-10" onClick={onClose}>Bloomy Toony</a>
+            </nav>
           </div>
         </div>
 
         {/* Center: Services + Media Kit */}
         <div className="menu-panel menu-panel-center">
           <div>
-            <div className="menu-section-label stagger-1">What We Create</div>
+            <a href="/what-we-create.html" className="menu-section-label menu-section-link stagger-1" onClick={onClose}>What We Create</a>
             <div className="menu-secondary-links" style={{marginTop:"14px"}}>
-              <a href="/#passage" className="stagger-2" onClick={onClose}>Original Productions</a>
-              <a href="/#passage" className="stagger-3" onClick={onClose}>Brand & Commercial Content</a>
-              <a href="/#passage" className="stagger-4" onClick={onClose}>Corporate Storytelling</a>
-              <a href="/#passage" className="stagger-5" onClick={onClose}>Digital Media</a>
-              <a href="/#passage" className="stagger-6" onClick={onClose}>Live Experiences</a>
-              <a href="/#passage" className="stagger-7" onClick={onClose}>Creative Strategy</a>
+              <a href="/what-we-create.html#original-productions" className="stagger-2" onClick={onClose}>Original Productions</a>
+              <a href="/what-we-create.html#brand-commercial" className="stagger-3" onClick={onClose}>Brand & Commercial Content</a>
+              <a href="/what-we-create.html#corporate-storytelling" className="stagger-4" onClick={onClose}>Corporate Storytelling</a>
+              <a href="/what-we-create.html#digital-media" className="stagger-5" onClick={onClose}>Digital Media</a>
+              <a href="/what-we-create.html#live-experiences" className="stagger-6" onClick={onClose}>Live Experiences</a>
+              <a href="/what-we-create.html#creative-strategy" className="stagger-7" onClick={onClose}>Creative Strategy</a>
             </div>
           </div>
 
           <div className="menu-divider" />
 
           <div>
-            <div className="menu-section-label stagger-8">Media Kit / Press Centre</div>
+            <a href="/media-kit.html" className="menu-section-label menu-section-link stagger-8" onClick={onClose}>Media Kit / Press Centre</a>
             <div className="menu-secondary-links" style={{marginTop:"14px"}}>
-              <a href="/#passage" className="stagger-9"  onClick={onClose}>Brands Overview</a>
+              <a href="/media-kit.html" className="stagger-9"  onClick={onClose}>Brands Overview</a>
               <a href="/#passage" className="sub-link stagger-10" onClick={onClose}>Pellucid Frames</a>
-              <a href="#"        className="sub-link stagger-10" onClick={onClose}>CapitalShiftz</a>
-              <a href="#"        className="sub-link stagger-10" onClick={onClose}>Bloomy Toony</a>
+              <a href="/capital-shiftz.html" className="sub-link stagger-10" onClick={onClose}>CapitalShiftz</a>
+              <a href="/bloomy-toony.html"        className="sub-link stagger-10" onClick={onClose}>Bloomy Toony</a>
             </div>
           </div>
         </div>
@@ -98,7 +105,7 @@ function MenuOverlay({ isOpen, onClose }) {
         <div className="menu-panel menu-panel-right">
           <div className="menu-right-top">
             <div className="menu-right-eyebrow">Ready to tell your story?</div>
-            <a href="/#contact" className="menu-right-cta" onClick={onClose}>Get in touch →</a>
+            <a href="/contact.html" className="menu-right-cta" onClick={onClose}>Get in touch →</a>
           </div>
 
           <div className="menu-right-bottom">
@@ -116,7 +123,7 @@ function MenuOverlay({ isOpen, onClose }) {
               <a href="#" onClick={onClose}>Environmental Policy</a>
               <a href="#" onClick={onClose}>Modern Slavery</a>
               <a href="#" onClick={onClose}>Supplier Code</a>
-              <a href="#" onClick={onClose}>Whistleblowing</a>
+              <a href="/whistleblowing-policy.html" onClick={onClose}>Whistleblowing</a>
               <a href="#" onClick={onClose}>AI Usage Policy</a>
             </div>
           </div>

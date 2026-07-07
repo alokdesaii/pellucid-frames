@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CapitalShiftz — Pellucid Frames</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* ===== CapitalShiftz — approach-style layout, our sharp language ===== */
+    .cs-wrap { background: var(--ink); color: var(--paper); }
+    .cs-inner { max-width: 1500px; margin: 0 auto; padding-left: clamp(24px, 6vw, 80px); padding-right: clamp(24px, 6vw, 80px); }
+
+    /* ---------- Hero — bg media + oversized title + volt intro box ---------- */
+    .cs-hero {
+      position: relative; min-height: 100svh; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: clamp(120px, 18vh, 200px) clamp(24px, 6vw, 80px) clamp(32px, 5vh, 60px);
+      border-bottom: 1px solid var(--line);
+      background: var(--ink);
+    }
+    .cs-hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .cs-hero-bg video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55) saturate(0.95); }
+    .cs-hero-bg::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.78) 100%);
+    }
+    /* content lives in a constrained left column (like the reference), not full-bleed */
+    .cs-hero-content { position: relative; z-index: 2; max-width: min(680px, 56vw); }
+    .cs-hero-pretitle {
+      display: block; font-family: "JetBrains Mono", monospace; font-size: 12px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--volt); margin-bottom: clamp(18px, 2.5vh, 30px);
+    }
+    .cs-title {
+      font-family: "Geologica", sans-serif; font-weight: 800;
+      font-size: clamp(46px, 6.2vw, 104px); line-height: 0.88; letter-spacing: -0.035em; margin: 0;
+    }
+    .cs-title span { display: block; }
+    .cs-title .cs-accent { color: var(--volt); }
+
+    /* volt intro box: intro text, then subscribe button — compact, left column */
+    .cs-hero-box {
+      margin-top: clamp(28px, 4vh, 52px);
+      background: var(--volt); color: var(--ink);
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: clamp(20px, 3vh, 30px);
+      padding: clamp(24px, 2.4vw, 40px);
+    }
+    .cs-hero-box-text {
+      font-family: "Geologica", sans-serif; font-weight: 400; font-size: clamp(16px, 1.5vw, 22px);
+      line-height: 1.4; letter-spacing: -0.01em; margin: 0; max-width: 42ch;
+    }
+    .cs-hero-box-text b { font-weight: 700; }
+    .cs-hero-box-cta { display: flex; }
+    .cs-sub-btn {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 16px 24px; background: var(--ink); color: var(--paper);
+      font-family: "Geologica", sans-serif; font-weight: 600; font-size: clamp(15px, 1.2vw, 18px);
+      letter-spacing: -0.01em; text-decoration: none; border: 1px solid var(--ink);
+      transition: background 0.25s, color 0.25s;
+    }
+    .cs-sub-btn .cs-sub-arrow { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .cs-sub-btn:hover { background: transparent; color: var(--ink); }
+    .cs-sub-btn:hover .cs-sub-arrow { transform: translateX(6px); }
+
+    /* shared CTA (closing section) */
+    .cs-cta {
+      display: inline-flex; align-items: center; gap: 14px; align-self: flex-start;
+      padding: 15px 22px; border: 1px solid var(--paper-25); background: var(--paper); color: var(--ink);
+      font-family: "Geologica", sans-serif; font-weight: 600; font-size: clamp(14px, 1.1vw, 17px);
+      letter-spacing: -0.01em; text-decoration: none; transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+    .cs-cta .cs-cta-arrow { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .cs-cta:hover { background: var(--volt); border-color: var(--volt); }
+    .cs-cta:hover .cs-cta-arrow { transform: translateX(6px); }
+
+    @media (max-width: 760px) {
+      .cs-hero-content { max-width: 100%; }
+    }
+
+    /* ---------- Section header (shared) ---------- */
+    .cs-section { padding-top: clamp(80px, 14vh, 180px); padding-bottom: clamp(80px, 14vh, 180px); }
+    .cs-sec-head {
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 88px);
+      align-items: start; margin-bottom: clamp(48px, 8vh, 100px);
+    }
+    .cs-pretitle { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--volt); margin-bottom: clamp(18px, 3vh, 30px); display: block; }
+    .cs-sec-title {
+      font-family: "Geologica", sans-serif; font-weight: 800; font-size: clamp(30px, 4vw, 64px);
+      line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance;
+    }
+    .cs-sec-intro {
+      font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(17px, 1.5vw, 23px);
+      line-height: 1.5; color: var(--paper-50); margin: 0; max-width: 46ch; text-wrap: pretty; padding-top: 6px;
+    }
+
+    /* ---------- Formats list — huge number that slides up on scroll ---------- */
+    .cs-list { border-top: 1px solid var(--cs-rule, rgba(253, 218, 16, 0.24)); }
+    .cs-item {
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: clamp(24px, 5vw, 96px); align-items: start;
+      padding: clamp(40px, 7vh, 90px) 0; border-bottom: 1px solid var(--cs-rule, rgba(253, 218, 16, 0.24));
+    }
+    /* number container masks the digit; .cs-num-inner slides from -100% → 0 (rAF) */
+    .cs-item-num {
+      overflow: hidden;
+      font-family: "Geologica", sans-serif; font-weight: 700; color: var(--volt);
+      font-size: clamp(72px, 12vw, 200px); line-height: 0.82; letter-spacing: -0.04em;
+    }
+    .cs-num-inner { display: block; transform: translateY(-100%); will-change: transform; }
+    .cs-item-content { padding-top: clamp(6px, 1.5vh, 20px); }
+    .cs-item-title { font-family: "Geologica", sans-serif; font-weight: 700; color: var(--volt); font-size: clamp(24px, 2.8vw, 46px); line-height: 1.04; letter-spacing: -0.025em; margin: 0; text-wrap: balance; }
+    .cs-item-text { font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(16px, 1.4vw, 21px); line-height: 1.5; color: var(--paper-50); margin: clamp(16px, 2.5vh, 28px) 0 0; max-width: 48ch; text-wrap: pretty; }
+    @media (max-width: 860px) {
+      .cs-item { grid-template-columns: 1fr; gap: clamp(12px, 3vw, 20px); }
+      .cs-item-num { font-size: clamp(64px, 22vw, 120px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-num-inner { transform: none; }
+    }
+
+    /* ---------- Intro cross block — scroll-scrubbed reveal + sticky text ----------
+       A tall track pins the grid (sticky); as you scroll through it, one rAF in
+       capital-shiftz.jsx scrubs the image clip-path open from the top-left corner
+       to bottom-right, with a crosshair tracking the reveal corner. Text stays
+       pinned until the track ends and the next section arrives. */
+    .cs-crossblock { position: relative; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .cs-cx-track { height: 220vh; }
+    .cs-cx-sticky {
+      position: sticky; top: 0; height: 100vh;
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr) minmax(0, 5fr);
+    }
+    .cs-cx-cell { min-width: 0; display: flex; padding: clamp(40px, 6vh, 90px) clamp(24px, 3vw, 60px); border-left: 1px solid var(--line); }
+    .cs-cx-cell:first-child { border-left: none; }
+    .cs-cx-media { align-items: center; }
+    .cs-cx-figure { position: relative; width: 100%; }
+    /* no border/background on the wrap — nothing shows until the reveal starts,
+       like the reference (the clipped image is the only visible thing) */
+    .cs-cx-imgwrap { position: relative; width: 100%; height: clamp(360px, 72vh, 820px); overflow: hidden; }
+    .cs-cx-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.9) saturate(0.92); clip-path: inset(0 100% 100% 0); }
+    /* crosshair marking the reveal corner (position set by rAF via --rx/--ry);
+       only visible mid-reveal — hidden at rest and once fully open */
+    .cs-cx-ch { position: absolute; inset: 0; pointer-events: none; z-index: 2; opacity: 0; transition: opacity 0.25s; }
+    .cs-cx-ch-v { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--paper-25); transform: translateX(var(--rx, 0px)); }
+    .cs-cx-ch-h { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--paper-25); transform: translateY(var(--ry, 0px)); }
+    .cs-cx-ch-read {
+      position: absolute; top: 0; left: 0;
+      transform: translate(calc(var(--rx, 0px) + 8px), calc(var(--ry, 0px) + 8px));
+      font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--volt); white-space: nowrap;
+    }
+    .cs-cx-textcell { align-items: center; }
+    .cs-cx-text { font-family: "Geologica", sans-serif; font-weight: 300; font-size: clamp(20px, 2.4vw, 36px); line-height: 1.3; letter-spacing: -0.015em; color: var(--paper); margin: 0; text-wrap: pretty; }
+    .cs-cx-text b { font-weight: 600; }
+    .cs-cx-text .cs-accent { color: var(--volt); font-weight: 600; }
+    @media (max-width: 860px) {
+      .cs-cx-track { height: auto; }
+      .cs-cx-sticky { position: static; height: auto; grid-template-columns: 1fr; }
+      .cs-cx-cell { border-left: none; border-top: 1px solid var(--line); }
+      .cs-cx-cell:first-child { border-top: none; }
+      .cs-cx-imgwrap { height: auto; aspect-ratio: 4 / 5; }
+      .cs-cx-img { clip-path: none !important; }
+      .cs-cx-ch { display: none; }
+    }
+    /* reveal is scroll-driven (JS keeps it in sync), so it stays active under
+       reduced-motion; the tracking crosshair is the only decorative bit dropped. */
+    @media (prefers-reduced-motion: reduce) {
+      .cs-cx-ch { display: none; }
+    }
+
+    /* ---------- Parallax band ---------- */
+    .cs-parallax { position: relative; height: clamp(360px, 76vh, 780px); overflow: hidden; background: #070707; display: grid; place-items: center; }
+    .cs-parallax img { position: absolute; left: 0; top: -18%; width: 100%; height: 136%; object-fit: cover; z-index: 0; will-change: transform; filter: brightness(0.62); }
+    .cs-parallax-h {
+      position: relative; z-index: 2; font-family: "Geologica", sans-serif; font-weight: 800;
+      font-size: clamp(34px, 6.5vw, 116px); line-height: 0.98; letter-spacing: -0.03em; color: var(--paper);
+      text-align: center; max-width: 18ch; margin: 0; padding: 0 clamp(24px, 6vw, 90px);
+      text-shadow: 0 6px 44px rgba(0, 0, 0, 0.7);
+    }
+    .cs-parallax-h .cs-accent { color: var(--volt); }
+
+    /* ---------- Values — sticky heading + expanding volt panels ---------- */
+    .cs-keys-sec { display: grid; grid-template-columns: minmax(0, 4.5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 88px); align-items: start; }
+    .cs-keys-head { position: sticky; top: clamp(100px, 14vh, 150px); }
+    .cs-keys { display: flex; flex-direction: column; gap: clamp(14px, 2vh, 22px); }
+    .cs-key { background: var(--volt); color: var(--ink); }
+    .cs-key-head {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: clamp(22px, 3vh, 34px) clamp(22px, 2.5vw, 38px);
+      background: transparent; border: none; cursor: pointer; text-align: left; color: inherit;
+    }
+    .cs-key-label { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+    .cs-key-plus { position: relative; flex: 0 0 auto; width: 20px; height: 20px; }
+    .cs-key-plus::before, .cs-key-plus::after {
+      content: ""; position: absolute; top: 50%; left: 50%; translate: -50% -50%;
+      background: var(--ink); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cs-key-plus::before { width: 20px; height: 2px; }
+    .cs-key-plus::after { width: 2px; height: 20px; }
+    .cs-key.on .cs-key-plus::after { transform: scaleY(0); }
+    .cs-key-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .cs-key.on .cs-key-panel { grid-template-rows: 1fr; }
+    .cs-key-inner { overflow: hidden; }
+    .cs-key-body { padding: 0 clamp(22px, 2.5vw, 38px) clamp(26px, 4vh, 44px); }
+    .cs-key-title {
+      font-family: "Geologica", sans-serif; font-weight: 800; font-size: clamp(24px, 2.8vw, 46px);
+      line-height: 1.02; letter-spacing: -0.03em; margin: 0 0 clamp(12px, 2vh, 18px); text-wrap: balance;
+    }
+    .cs-key-text { font-family: "Geologica", sans-serif; font-weight: 400; font-size: clamp(15px, 1.35vw, 20px); line-height: 1.5; color: rgba(0, 0, 0, 0.72); margin: 0; max-width: 46ch; }
+    @media (max-width: 860px) {
+      .cs-keys-sec { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 44px); }
+      .cs-keys-head { position: static; }
+    }
+
+    /* ---------- Closing CTA ---------- */
+    .cs-closing { padding-top: clamp(90px, 16vh, 220px); padding-bottom: clamp(90px, 16vh, 220px); border-top: 1px solid var(--line); }
+    .cs-closing-pre { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--volt); margin-bottom: clamp(24px, 4vh, 44px); }
+    .cs-closing-h {
+      font-family: "Geologica", sans-serif; font-weight: 800; font-size: clamp(40px, 7vw, 120px);
+      line-height: 0.95; letter-spacing: -0.035em; margin: 0 0 clamp(40px, 7vh, 80px); text-wrap: balance;
+    }
+
+    /* ---------- Reveal ---------- */
+    .cs-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .cs-reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .cs-reveal { opacity: 1; transform: none; transition: none; } }
+
+    @media (max-width: 860px) {
+      .cs-hero-grid { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 44px); align-items: start; }
+      .cs-sec-head { grid-template-columns: 1fr; gap: clamp(16px, 4vw, 28px); }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cs-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=10"></script>
+  <script type="text/babel" src="src/app.jsx?v=14"></script>
+  <script type="text/babel" src="src/capital-shiftz.jsx?v=9"></script>
+</body>
+
+</html>

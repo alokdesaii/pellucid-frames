@@ -1,8 +1,8 @@
 // Site footer — scenic-image footer with link columns and a giant gradient wordmark.
-function FootCol({ title, children }) {
+function FootCol({ title, href, children }) {
   return (
     <div className="sf-col">
-      <h4 className="sf-col-title">{title}</h4>
+      <h4 className="sf-col-title">{href ? <a href={href}>{title}</a> : title}</h4>
       <div className="sf-col-links">{children}</div>
     </div>
   );
@@ -35,32 +35,31 @@ function SiteFooter() {
           <FootCol title="NAVIGATE">
             <a href="/#top">Home</a>
             <a href="/about.html">About Pellucid Frames</a>
-            <a href="/#passage">Why Pellucid</a>
-            <a href="/#passage">Who We Work With</a>
-            <a href="/#passage">Our Work</a>
-            <a href="/#passage">Looking Ahead</a>
-            <a href="/#contact">Contact</a>
+            <a href="/why-pellucid.html">Why Pellucid</a>
+            <a href="/our-philosophy.html">Our Philosophy</a>
+            <a href="/our-work.html">Our Work</a>
+            <a href="/contact.html">Contact</a>
           </FootCol>
 
-          <FootCol title="WHAT WE CREATE">
-            <a href="/#passage">Original Productions</a>
-            <a href="/#passage">Brand & Commercial Content</a>
-            <a href="/#passage">Corporate Storytelling</a>
-            <a href="/#passage">Digital Media</a>
-            <a href="/#passage">Live Experiences</a>
-            <a href="/#passage">Creative Strategy</a>
+          <FootCol title="WHAT WE CREATE" href="/what-we-create.html">
+            <a href="/what-we-create.html#original-productions">Original Productions</a>
+            <a href="/what-we-create.html#brand-commercial">Brand & Commercial Content</a>
+            <a href="/what-we-create.html#corporate-storytelling">Corporate Storytelling</a>
+            <a href="/what-we-create.html#digital-media">Digital Media</a>
+            <a href="/what-we-create.html#live-experiences">Live Experiences</a>
+            <a href="/what-we-create.html#creative-strategy">Creative Strategy</a>
           </FootCol>
 
-          <FootCol title="MEDIA KIT / PRESS CENTRE">
-            <a href="/#passage">Brands Overview</a>
+          <FootCol title="MEDIA KIT / PRESS CENTRE" href="/media-kit.html">
+            <a href="/media-kit.html">Brands Overview</a>
             <a href="/#passage" className="sf-sublink">Pellucid Frames</a>
-            <a href="#"        className="sf-sublink">CapitalShiftz</a>
-            <a href="#"        className="sf-sublink">Bloomy Toony</a>
+            <a href="/capital-shiftz.html" className="sf-sublink">CapitalShiftz</a>
+            <a href="/bloomy-toony.html"        className="sf-sublink">Bloomy Toony</a>
           </FootCol>
 
           <FootCol title="OUR YOUTUBE CHANNELS">
-            <a href="#">CapitalShiftz</a>
-            <a href="#">Bloomy Toony</a>
+            <a href="/capital-shiftz.html">CapitalShiftz</a>
+            <a href="/bloomy-toony.html">Bloomy Toony</a>
             <div className="flex gap-3 mt-4 border-t border-white/5 pt-4">
               <a href="#" target="_blank" rel="noopener" aria-label="Instagram" className="text-xs opacity-60 hover:opacity-100 transition-opacity">Instagram</a>
               <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn" className="text-xs opacity-60 hover:opacity-100 transition-opacity">LinkedIn</a>
@@ -83,7 +82,7 @@ function SiteFooter() {
             <a href="#">Environmental Sustainability Policy</a>
             <a href="#">Modern Slavery & Human Rights Statement</a>
             <a href="#">Supplier Code of Conduct</a>
-            <a href="#">Whistleblowing Policy</a>
+            <a href="/whistleblowing-policy.html">Whistleblowing Policy</a>
             <a href="#">AI Usage & Responsible Innovation Policy</a>
           </div>
         </div>

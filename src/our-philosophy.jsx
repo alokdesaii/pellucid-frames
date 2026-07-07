@@ -195,51 +195,33 @@ const OP_TENETS = [
   },
 ];
 
-// Numbered principles ledger. Each belief reveals on scroll via a shared
-// IntersectionObserver that adds `.in` (once) to every [data-op-reveal].
+// Principles as full-bleed sharp panels: number | title | copy, split by solid
+// dividers; each sticks and the next overlaps it on scroll (pure CSS sticky).
 function PhilosophySections() {
-  const rootRef = opUseRef(null);
-
-  opUseEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    const els = Array.from(root.querySelectorAll("[data-op-reveal]"));
-    const reveal = (el) => el.classList.add("in");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
-      els.forEach(reveal);
-      return;
-    }
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    els.forEach((el) => { if (el.getBoundingClientRect().top < vh * 0.92) reveal(el); });
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }),
-      { rootMargin: "0px 0px -10% 0px", threshold: 0 }
-    );
-    els.forEach((el) => { if (!el.classList.contains("in")) io.observe(el); });
-    const fallback = setTimeout(() => els.forEach(reveal), 2400);
-    return () => { io.disconnect(); clearTimeout(fallback); };
-  }, []);
-
   return (
-    <section className="op-body-wrap" ref={rootRef}>
-      <div className="op-ledger">
-        <div className="op-ledger-head mono op-reveal" data-op-reveal>
+    <section className="op-body-wrap">
+      <div className="op-head">
+        <div className="op-ledger-head mono">
           <span>Our Philosophy</span>
           <b>№ 002 — Ethos</b>
         </div>
-        <div className="op-stack">
-          {OP_TENETS.map((t, i) => (
-            <article className="op-card" style={{ "--i": i }} key={i}>
-              <span className="op-card-num mono">{String(i + 1).padStart(2, "0")} / 05</span>
-              <h2 className="op-card-h">{t.title}</h2>
-              <div className="op-card-body-wrap">
-                {t.body.map((p, j) => (
-                  <p className="op-card-body" key={j}>{p}</p>
-                ))}
+      </div>
+      <div className="op-stack">
+        {OP_TENETS.map((t, i) => (
+          <article className="op-panel" style={{ "--i": i }} key={i}>
+            <div className="op-col op-col--num">
+              <span className="op-num">{String(i + 1).padStart(2, "0")}<i>/</i></span>
+            </div>
+            <div className="op-col op-col--title">
+              <h2 className="op-ptitle">{t.title}</h2>
+            </div>
+            <div className="op-col op-col--copy">
+              <div className="op-pbody">
+                {t.body.map((p, j) => <p key={j}>{p}</p>)}
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

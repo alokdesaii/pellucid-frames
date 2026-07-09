@@ -94,7 +94,7 @@ function MenuOverlay({ isOpen, onClose }) {
             <a href="/media-kit.html" className="menu-section-label menu-section-link stagger-8" onClick={onClose}>Media Kit / Press Centre</a>
             <div className="menu-secondary-links" style={{marginTop:"14px"}}>
               <a href="/media-kit.html" className="stagger-9"  onClick={onClose}>Brands Overview</a>
-              <a href="/#passage" className="sub-link stagger-10" onClick={onClose}>Pellucid Frames</a>
+              <a href="/about.html" className="sub-link stagger-10" onClick={onClose}>Pellucid Frames</a>
               <a href="/capital-shiftz.html" className="sub-link stagger-10" onClick={onClose}>Capital Shiftz</a>
               <a href="/bloomy-toony.html"        className="sub-link stagger-10" onClick={onClose}>Bloomy Toony</a>
             </div>

@@ -52,7 +52,7 @@ function SiteFooter() {
 
           <FootCol title="MEDIA KIT / PRESS CENTRE" href="/media-kit.html">
             <a href="/media-kit.html">Brands Overview</a>
-            <a href="/#passage" className="sf-sublink">Pellucid Frames</a>
+            <a href="/about.html" className="sf-sublink">Pellucid Frames</a>
             <a href="/capital-shiftz.html" className="sf-sublink">CapitalShiftz</a>
             <a href="/bloomy-toony.html"        className="sf-sublink">Bloomy Toony</a>
           </FootCol>

@@ -68,7 +68,7 @@ function MenuOverlay({ isOpen, onClose }) {
           <div>
             <div className="menu-section-label stagger-9">Our YouTube Channels</div>
             <nav className="menu-primary-links" style={{marginTop:"12px"}}>
-              <a href="/capital-shiftz.html" className="stagger-10" onClick={onClose}>CapitalShiftz</a>
+              <a href="/capital-shiftz.html" className="stagger-10" onClick={onClose}>Capital Shiftz</a>
               <a href="/bloomy-toony.html" className="stagger-10" onClick={onClose}>Bloomy Toony</a>
             </nav>
           </div>
@@ -95,7 +95,7 @@ function MenuOverlay({ isOpen, onClose }) {
             <div className="menu-secondary-links" style={{marginTop:"14px"}}>
               <a href="/media-kit.html" className="stagger-9"  onClick={onClose}>Brands Overview</a>
               <a href="/#passage" className="sub-link stagger-10" onClick={onClose}>Pellucid Frames</a>
-              <a href="/capital-shiftz.html" className="sub-link stagger-10" onClick={onClose}>CapitalShiftz</a>
+              <a href="/capital-shiftz.html" className="sub-link stagger-10" onClick={onClose}>Capital Shiftz</a>
               <a href="/bloomy-toony.html"        className="sub-link stagger-10" onClick={onClose}>Bloomy Toony</a>
             </div>
           </div>
@@ -111,20 +111,20 @@ function MenuOverlay({ isOpen, onClose }) {
           <div className="menu-right-bottom">
             <div className="menu-right-legal-title">Legal & Corporate Policies</div>
             <div className="menu-right-legal-links">
-              <a href="#" onClick={onClose}>Privacy Policy</a>
-              <a href="#" onClick={onClose}>Disclaimer</a>
-              <a href="#" onClick={onClose}>Terms & Conditions</a>
-              <a href="#" onClick={onClose}>Copyright Notice</a>
-              <a href="#" onClick={onClose}>CSR Policy</a>
-              <a href="#" onClick={onClose}>Intellectual Property</a>
-              <a href="#" onClick={onClose}>Accessibility Statement</a>
-              <a href="#" onClick={onClose}>Editorial Standards</a>
-              <a href="#" onClick={onClose}>Cookie Policy</a>
-              <a href="#" onClick={onClose}>Environmental Policy</a>
-              <a href="#" onClick={onClose}>Modern Slavery</a>
-              <a href="#" onClick={onClose}>Supplier Code</a>
+              <a href="/privacy-policy.html" onClick={onClose}>Privacy Policy</a>
+              <a href="/disclaimer.html" onClick={onClose}>Disclaimer</a>
+              <a href="/terms-conditions.html" onClick={onClose}>Terms & Conditions</a>
+              <a href="/copyright-notice.html" onClick={onClose}>Copyright Notice</a>
+              <a href="/csr-policy.html" onClick={onClose}>CSR Policy</a>
+              <a href="/ip-policy.html" onClick={onClose}>Intellectual Property</a>
+              <a href="/accessibility-statement.html" onClick={onClose}>Accessibility Statement</a>
+              <a href="/editorial-standards.html" onClick={onClose}>Editorial Standards</a>
+              <a href="/cookie-policy.html" onClick={onClose}>Cookie Policy</a>
+              <a href="/environmental-policy.html" onClick={onClose}>Environmental Policy</a>
+              <a href="/modern-slavery-statement.html" onClick={onClose}>Modern Slavery</a>
+              <a href="/supplier-code.html" onClick={onClose}>Supplier Code</a>
               <a href="/whistleblowing-policy.html" onClick={onClose}>Whistleblowing</a>
-              <a href="#" onClick={onClose}>AI Usage Policy</a>
+              <a href="/ai-usage-policy.html" onClick={onClose}>AI Usage Policy</a>
             </div>
           </div>
         </div>

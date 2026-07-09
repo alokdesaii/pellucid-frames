@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSR Policy — Pellucid Frames</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script>
+    window.LEGAL_DOC = {
+      title: "Corporate Social Responsibility Policy",
+      lead: "How Pellucid Frames tries to create lasting value — for audiences, communities, employees and society.",
+      sections: [
+        {
+          h: "Our Commitment",
+          p: [
+            "At Pellucid Frames, we believe media carries influence and responsibility.",
+            "Our commitment extends beyond producing exceptional content — we strive to create lasting value for audiences, communities, employees and society."
+          ]
+        },
+        {
+          h: "Responsible Storytelling",
+          p: ["We are committed to producing content that is:"],
+          list: ["Honest", "Respectful", "Inclusive", "Factually responsible where applicable", "Culturally aware"],
+          groups: [{ p: ["We reject misinformation, discrimination and harmful stereotypes."] }]
+        },
+        {
+          h: "Children’s Wellbeing",
+          p: ["Through Bloomy Toony we are committed to creating age-appropriate content that encourages:"],
+          list: ["Curiosity", "Creativity", "Learning", "Kindness", "Respect", "Positive social values"]
+        },
+        {
+          h: "Ethical Business Practices",
+          p: ["We conduct business with integrity through:"],
+          list: ["Ethical decision-making", "Anti-corruption measures", "Compliance with applicable laws", "Respect for intellectual property", "Fair commercial practices"]
+        },
+        {
+          h: "Diversity & Inclusion",
+          p: ["We seek to build an inclusive workplace and encourage collaboration with creators from diverse cultures, backgrounds and perspectives."]
+        },
+        {
+          h: "Environmental Responsibility",
+          p: ["Where practical, we seek to:"],
+          list: ["Minimise production waste", "Reduce unnecessary travel", "Encourage digital workflows", "Use sustainable production practices", "Improve operational efficiency"]
+        },
+        {
+          h: "Community Impact",
+          p: ["We support initiatives that promote:"],
+          list: ["Media literacy", "Creative education", "Financial literacy", "Young creators", "Community storytelling"],
+          groups: [{ p: ["We believe access to quality storytelling should be inclusive and empowering."] }]
+        },
+        {
+          h: "Governance",
+          p: [
+            "Pellucid Frames operates in accordance with the laws of Hong Kong and maintains appropriate standards of governance, transparency and accountability.",
+            "Our directors are committed to responsible corporate conduct and continuous improvement."
+          ]
+        },
+        {
+          h: "Review",
+          p: ["This Policy will be reviewed periodically by management to ensure it remains appropriate for our business, stakeholders and legal obligations."]
+        }
+      ]
+    };
+  </script>
+</head>
+
+<body>
+  <div id="lg-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=23"></script>
+  <script type="text/babel" src="src/app.jsx?v=28"></script>
+  <script type="text/babel" src="src/legal.jsx?v=3"></script>
+</body>
+
+</html>

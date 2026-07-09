@@ -53,6 +53,14 @@ function LegalApp() {
               <div><h2 className="lg-h">{sec.h}</h2></div>
               <div className="lg-content">
                 {(sec.p || []).map((t, j) => <p className="lg-p" key={j}>{t}</p>)}
+                {(sec.groups || []).map((g, gi) => (
+                  <div className="lg-group" key={gi}>
+                    {g.h && <h3 className="lg-subhead">{g.h}</h3>}
+                    {(g.p || []).map((t, j) => <p className="lg-p" key={j}>{t}</p>)}
+                    {g.email && <a className="lg-email" href={`mailto:${g.email}`}>{g.email}</a>}
+                    {g.list && <ul className="lg-list">{g.list.map((x, k) => <li key={k}>{x}</li>)}</ul>}
+                  </div>
+                ))}
                 {sec.list && (
                   <ul className="lg-list">
                     {sec.list.map((x, k) => <li key={k}>{x}</li>)}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions — Pellucid Frames</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script>
+    window.LEGAL_DOC = {
+      title: "Terms & Conditions",
+      lead: "The terms that govern your use of the Pellucid Frames website and content.",
+      sections: [
+        {
+          h: "Acceptance",
+          p: [
+            "By accessing this website you agree to these Terms and Conditions.",
+            "If you disagree with any part of these Terms, you should discontinue use of the website."
+          ]
+        },
+        {
+          h: "Intellectual Property",
+          p: ["Unless otherwise stated, all intellectual property rights relating to this website and its content belong to Pellucid Frames Limited."],
+          groups: [
+            {
+              p: ["This includes:"],
+              list: ["Videos", "Films", "Scripts", "Music (where owned)", "Graphics", "Logos", "Articles", "Photographs", "Animations", "Designs", "Branding"]
+            },
+            { p: ["No content may be reproduced, distributed, modified or commercially exploited without prior written permission."] }
+          ]
+        },
+        {
+          h: "User Conduct",
+          p: ["Users agree not to:"],
+          list: [
+            "Violate applicable laws",
+            "Upload malicious software",
+            "Attempt unauthorised access",
+            "Copy or scrape website content",
+            "Infringe intellectual property rights",
+            "Interfere with website operation"
+          ]
+        },
+        {
+          h: "User Submissions",
+          p: [
+            "Any ideas or materials voluntarily submitted to Pellucid Frames may be reviewed for potential collaboration.",
+            "Unless specifically agreed in writing, submission of materials does not create any obligation or confidential relationship."
+          ]
+        },
+        {
+          h: "External Links",
+          p: [
+            "Our website may contain links to external websites.",
+            "We are not responsible for the content, security or privacy practices of third-party websites."
+          ]
+        },
+        {
+          h: "Limitation of Liability",
+          p: ["To the fullest extent permitted under Hong Kong law, Pellucid Frames shall not be liable for any indirect, incidental, consequential or special damages arising from use of this website."]
+        },
+        {
+          h: "Governing Law",
+          p: [
+            "These Terms shall be governed by the laws of the Hong Kong Special Administrative Region.",
+            "Any disputes shall be subject to the exclusive jurisdiction of the Hong Kong courts."
+          ]
+        }
+      ]
+    };
+  </script>
+</head>
+
+<body>
+  <div id="lg-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=23"></script>
+  <script type="text/babel" src="src/app.jsx?v=28"></script>
+  <script type="text/babel" src="src/legal.jsx?v=3"></script>
+</body>
+
+</html>

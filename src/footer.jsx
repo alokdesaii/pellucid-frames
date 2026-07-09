@@ -70,20 +70,20 @@ function SiteFooter() {
         <div className="sf-policies-container">
           <div className="sf-policies-title">Legal & Corporate Policies</div>
           <div className="sf-policies-grid">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Disclaimer</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Copyright Notice</a>
-            <a href="#">Corporate Social Responsibility (CSR) Policy</a>
-            <a href="#">Copyright & Intellectual Property Policy</a>
-            <a href="#">Accessibility Statement</a>
-            <a href="#">Editorial Standards & Code of Ethics</a>
-            <a href="#">Cookie Policy</a>
-            <a href="#">Environmental Sustainability Policy</a>
-            <a href="#">Modern Slavery & Human Rights Statement</a>
-            <a href="#">Supplier Code of Conduct</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/disclaimer.html">Disclaimer</a>
+            <a href="/terms-conditions.html">Terms & Conditions</a>
+            <a href="/copyright-notice.html">Copyright Notice</a>
+            <a href="/csr-policy.html">Corporate Social Responsibility (CSR) Policy</a>
+            <a href="/ip-policy.html">Copyright & Intellectual Property Policy</a>
+            <a href="/accessibility-statement.html">Accessibility Statement</a>
+            <a href="/editorial-standards.html">Editorial Standards & Code of Ethics</a>
+            <a href="/cookie-policy.html">Cookie Policy</a>
+            <a href="/environmental-policy.html">Environmental Sustainability Policy</a>
+            <a href="/modern-slavery-statement.html">Modern Slavery & Human Rights Statement</a>
+            <a href="/supplier-code.html">Supplier Code of Conduct</a>
             <a href="/whistleblowing-policy.html">Whistleblowing Policy</a>
-            <a href="#">AI Usage & Responsible Innovation Policy</a>
+            <a href="/ai-usage-policy.html">AI Usage & Responsible Innovation Policy</a>
           </div>
         </div>
       </div>

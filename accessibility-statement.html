@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessibility Statement — Pellucid Frames</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#000000", paper: "#F9EFE8", volt: "#FDDA10" },
+          fontFamily: { display: ["Geologica", "sans-serif"], mono: ["JetBrains Mono", "monospace"] },
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script>
+    window.LEGAL_DOC = {
+      title: "Accessibility Statement",
+      lead: "Pellucid Frames believes storytelling should be accessible to everyone.",
+      sections: [
+        {
+          h: "Our Commitment",
+          p: [
+            "Pellucid Frames believes storytelling should be accessible to everyone.",
+            "We are committed to making our website, digital content and online experiences as accessible and inclusive as reasonably possible for all users, including people with disabilities.",
+            "Accessibility is an ongoing process and forms part of our commitment to responsible digital publishing."
+          ]
+        },
+        {
+          h: "Website Accessibility",
+          p: ["We aim to:"],
+          list: [
+            "Use clear and readable typography",
+            "Maintain strong colour contrast",
+            "Provide logical page navigation",
+            "Support keyboard navigation where practical",
+            "Use descriptive page headings",
+            "Optimise website performance",
+            "Ensure compatibility with modern browsers and assistive technologies"
+          ]
+        },
+        {
+          h: "Video Accessibility",
+          p: ["Where appropriate and reasonably practicable, we aim to provide:"],
+          list: ["Closed captions", "Subtitles", "Descriptive titles", "Accessible video players", "Clear audio"],
+          groups: [{ p: ["Future productions will continue incorporating accessibility improvements wherever possible."] }]
+        },
+        {
+          h: "Continuous Improvement",
+          p: [
+            "Accessibility standards continue to evolve.",
+            "We regularly review our website and digital platforms to identify opportunities for improvement and encourage feedback from users."
+          ]
+        },
+        {
+          h: "Third-Party Platforms",
+          p: ["Some content is hosted on external platforms such as:"],
+          list: ["YouTube", "Instagram", "LinkedIn"],
+          groups: [{ p: ["Accessibility on these platforms is governed by their own systems and policies."] }]
+        },
+        {
+          h: "Feedback",
+          groups: [
+            { p: ["If you experience accessibility issues while using our website or content, we welcome your feedback.", "Please contact:"], email: "accessibility@pellucidframes.com" },
+            { p: ["We will make reasonable efforts to resolve accessibility concerns promptly."] }
+          ]
+        },
+        {
+          h: "Future Commitment",
+          p: [
+            "As Pellucid Frames grows, accessibility will remain an important consideration in our productions, digital experiences and public communications.",
+            "Our goal is to create media that is engaging, inclusive and accessible to the widest possible audience."
+          ]
+        }
+      ]
+    };
+  </script>
+</head>
+
+<body>
+  <div id="lg-root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx?v=23"></script>
+  <script type="text/babel" src="src/app.jsx?v=28"></script>
+  <script type="text/babel" src="src/legal.jsx?v=3"></script>
+</body>
+
+</html>

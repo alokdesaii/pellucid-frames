@@ -151,10 +151,12 @@ function LightRays({
   lrUseEffect(() => {
     const mount = mountRef.current;
     if (!mount || typeof THREE === "undefined") return;
-    // ponytail: skip the fullscreen shader on phones/small tablets and for reduced-motion —
-    // saves battery/GPU where it's pure decoration. Restore path: reload on a wider viewport.
+    // ponytail: skip the fullscreen shader on small screens and for reduced-motion — saves
+    // battery/GPU where it's pure decoration. Width-only on purpose: a `pointer: coarse` check
+    // also matched touch-capable desktops, which disabled the canvas and broke GPU compositing
+    // behind the zooming TV (scroll stutter). Restore path: reload on a wider viewport.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        window.matchMedia("(max-width: 820px), (pointer: coarse)").matches) return;
+        window.matchMedia("(max-width: 820px)").matches) return;
 
     let renderer;
     try {

@@ -171,10 +171,11 @@ function Bubble({
   bbUseEffect(() => {
     const mount = mountRef.current;
     if (!mount || typeof THREE === "undefined") return;
-    // ponytail: skip the plasma-orb shader on phones/small tablets and for reduced-motion.
-    // Restore path: reload on a wider viewport.
+    // ponytail: skip the plasma-orb shader on small screens and for reduced-motion. Width-only:
+    // a `pointer: coarse` check also matched touch-capable desktops, disabling the canvas and
+    // breaking GPU compositing (scroll stutter). Restore path: reload on a wider viewport.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        window.matchMedia("(max-width: 820px), (pointer: coarse)").matches) return;
+        window.matchMedia("(max-width: 820px)").matches) return;
 
     let renderer;
     try {

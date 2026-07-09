@@ -604,7 +604,7 @@ function AboutHerrstromPage() {
           powerful stories are those told with honesty, precision and intention.
         </p>
         <figure className="ah-figure" data-reveal>
-          <img src="uploads/about/intro_right.jpg" alt="Pellucid Frames — in the studio" />
+          <img src="uploads/about/intro_right.jpg" alt="Pellucid Frames — in the studio" loading="lazy" decoding="async" />
           <figcaption className="mono">Fig.01 - The Pellucid Experience</figcaption>
         </figure>
       </EditorialRow>

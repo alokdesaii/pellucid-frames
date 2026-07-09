@@ -250,7 +250,7 @@ function CapitalShiftzBody() {
 
       {/* Parallax band */}
       <section className="cs-parallax" ref={parallaxRef}>
-        <img src="uploads/capital-shiftz/cs-parallax.jpg" alt="" />
+        <img src="uploads/capital-shiftz/cs-parallax.jpg" alt="" loading="lazy" decoding="async" />
         <h2 className="cs-parallax-h">Understand the money. <span className="cs-accent">Skip the noise.</span></h2>
       </section>
 

@@ -80,6 +80,8 @@ function ParallaxBand({ num, heading }) {
         className="wp-px-img"
         src={`uploads/why-pellucid/parallax-${num}.jpg`}
         alt=""
+        loading="lazy"
+        decoding="async"
         onError={(e) => { e.currentTarget.style.display = "none"; }}
       />
       <div className="wp-colgrid" aria-hidden="true" />

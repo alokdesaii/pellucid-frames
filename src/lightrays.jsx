@@ -151,6 +151,10 @@ function LightRays({
   lrUseEffect(() => {
     const mount = mountRef.current;
     if (!mount || typeof THREE === "undefined") return;
+    // ponytail: skip the fullscreen shader on phones/small tablets and for reduced-motion —
+    // saves battery/GPU where it's pure decoration. Restore path: reload on a wider viewport.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        window.matchMedia("(max-width: 820px), (pointer: coarse)").matches) return;
 
     let renderer;
     try {

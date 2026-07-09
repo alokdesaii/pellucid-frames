@@ -250,7 +250,7 @@ function BloomyToonyBody() {
 
       {/* Parallax band */}
       <section className="bt-parallax" ref={parallaxRef}>
-        <img src="uploads/bloomy-toony/bt-parallax.jpg" alt="" />
+        <img src="uploads/bloomy-toony/bt-parallax.jpg" alt="" loading="lazy" decoding="async" />
         <h2 className="bt-parallax-h">Screen time that <span className="bt-accent">feels good.</span></h2>
       </section>
 

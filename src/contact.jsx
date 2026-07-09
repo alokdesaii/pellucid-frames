@@ -22,7 +22,13 @@ const CT_EMPTY = {
   name: "", email: "", phone: "", company: "",
   projectType: "", budget: "", timeline: "",
   message: "", referral: "",
+  website: "", // honeypot — must stay empty; bots fill it
 };
+
+// Server-side form handler (PHP on the host). Submissions POST here and land in
+// the studio inbox. If it's ever unreachable (e.g. previewing on a static
+// server with no PHP), the form falls back to a prefilled mailto:.
+const CT_ENDPOINT = "/sendmail.php";
 
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -31,6 +37,7 @@ function ContactForm() {
   const [f, setF] = ctUseState(CT_EMPTY);
   const [errs, setErrs] = ctUseState({});
   const [done, setDone] = ctUseState(false);
+  const [sending, setSending] = ctUseState(false);
 
   const set = (k) => (e) => {
     setF((prev) => ({ ...prev, [k]: e.target.value }));
@@ -56,8 +63,8 @@ function ContactForm() {
   const next = () => { if (validate()) setStep((s) => Math.min(s + 1, 2)); };
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
-  const submitEnquiry = () => {
-    if (!validate()) return;
+  // Prefilled mailto — used as the fallback if the PHP endpoint is unreachable.
+  const mailtoHref = () => {
     const body = [
       `Name: ${f.name}`,
       `Email: ${f.email}`,
@@ -73,12 +80,32 @@ function ContactForm() {
       "",
       `Heard about us via: ${f.referral || "—"}`,
     ].join("\n");
-    const href =
+    return (
       `mailto:${CT_EMAIL}` +
       `?subject=${encodeURIComponent(`New enquiry — ${f.name}`)}` +
-      `&body=${encodeURIComponent(body)}`;
-    window.location.href = href;
-    setDone(true);
+      `&body=${encodeURIComponent(body)}`
+    );
+  };
+
+  const submitEnquiry = async () => {
+    if (!validate() || sending) return;
+    setSending(true);
+    try {
+      const res = await fetch(CT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(f),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) { setDone(true); return; }
+      throw new Error(data.error || "send failed");
+    } catch (err) {
+      // Endpoint down / no PHP (e.g. local static preview) → open mail client.
+      window.location.href = mailtoHref();
+      setDone(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const onKeyDown = (e) => {
@@ -124,6 +151,11 @@ function ContactForm() {
 
   return (
     <div onKeyDown={onKeyDown}>
+      {/* Honeypot — hidden from users; bots that fill it get silently dropped. */}
+      <input type="text" name="website" tabIndex="-1" autoComplete="off"
+        value={f.website} onChange={set("website")} aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", opacity: 0 }} />
+
       <div className="ct-stepline mono">
         <span><b>{String(step + 1).padStart(2, "0")}</b> / 03</span>
         <span className="ct-step-name">{CT_STEP_NAMES[step]}</span>
@@ -172,8 +204,8 @@ function ContactForm() {
             <span className="ct-arrow" aria-hidden="true">→</span>
           </button>
         ) : (
-          <button type="button" className="ct-btn ct-btn--primary" onClick={submitEnquiry}>
-            <span>Send enquiry</span>
+          <button type="button" className="ct-btn ct-btn--primary" onClick={submitEnquiry} disabled={sending}>
+            <span>{sending ? "Sending…" : "Send enquiry"}</span>
             <span className="ct-arrow" aria-hidden="true">→</span>
           </button>
         )}

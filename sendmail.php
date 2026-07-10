@@ -6,7 +6,7 @@
 // guard against header injection + spam, then send. Returns JSON {ok:bool}.
 //
 // ─── CONFIG ────────────────────────────────────────────────────────────────
-$TO      = 'hello@pellucidframes.com';        // where enquiries land
+$TO      = 'alok.desai@harbourandhills.com';  // where enquiries land (test)
 $FROM    = 'no-reply@pellucidframes.com';     // MUST be a @pellucidframes.com
                                               // address so SPF/DKIM pass
 $SUBJECT = 'New enquiry via pellucidframes.com';

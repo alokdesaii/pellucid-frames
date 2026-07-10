@@ -3,7 +3,7 @@
 // `submitEnquiry` for a fetch to a form endpoint (Formspree, etc.) when ready.
 const { useState: ctUseState, useEffect: ctUseEffect } = React;
 
-const CT_EMAIL = "hello@pellucidframes.com";
+const CT_EMAIL = "alok.desai@harbourandhills.com";
 
 // Flip to true once the social profiles are live to show the "Elsewhere" links.
 const CT_SHOW_SOCIALS = false;
@@ -137,11 +137,10 @@ function ContactForm() {
   if (done) {
     return (
       <div className="ct-done">
-        <h2 className="ct-done-h">Thanks — your message is <span className="ct-accent">on its way.</span></h2>
+        <h2 className="ct-done-h">Thanks — we've <span className="ct-accent">received your message.</span></h2>
         <p>
-          Your email client should have opened with the details ready to send. If it
-          didn't, write to us directly at <a href={`mailto:${CT_EMAIL}`} style={{ color: "var(--volt)" }}>{CT_EMAIL}</a>.
-          We reply within two business days.
+          Our team will review your enquiry and get back to you shortly. If you'd like to
+          reach us directly in the meantime, write to <a href={`mailto:${CT_EMAIL}`} style={{ color: "var(--volt)" }}>{CT_EMAIL}</a>.
         </p>
       </div>
     );

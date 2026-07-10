@@ -2676,3 +2676,52 @@
       font-size: clamp(15px, 1.4vw, 20px); letter-spacing: -0.01em; color: var(--paper);
       margin: 0 0 clamp(10px, 1.6vh, 15px);
     }
+
+/* ── Homepage "Our Channels" band ─────────────────────────────────────── */
+.channels { background: var(--ink); padding: clamp(70px, 12vh, 140px) 0; }
+.channels-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 80px); }
+.channels-head { margin-bottom: clamp(34px, 6vh, 64px); }
+.channels-eyebrow {
+  display: flex; justify-content: space-between; gap: 16px;
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--paper-50); padding-bottom: 14px; border-bottom: 1px solid var(--line);
+}
+.channels-title {
+  font-family: "Geologica", sans-serif; font-weight: 700;
+  font-size: clamp(28px, 4vw, 52px); line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--paper); margin: 22px 0 0; text-wrap: balance;
+}
+.channels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); }
+.channel-card {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line); background: var(--paper-06);
+  padding: clamp(20px, 2.4vw, 32px); transition: border-color .25s, background .25s;
+}
+.channel-card:hover { border-color: var(--paper-25); background: var(--paper-12); }
+.channel-logo {
+  /* transparent-bg vector logos sit straight on the ink card */
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; padding: clamp(14px, 2vw, 28px) 0;
+  margin-bottom: clamp(16px, 2vw, 24px);
+}
+.channel-logo img { display: block; width: auto; max-width: 100%; height: auto; max-height: 150px; object-fit: contain; }
+.channel-body { flex: 1 1 auto; }
+.channel-tag { display: block; font-size: 11px; letter-spacing: .2em; color: var(--volt); margin-bottom: 12px; }
+.channel-name {
+  font-family: "Geologica", sans-serif; font-weight: 700;
+  font-size: clamp(22px, 2.4vw, 32px); letter-spacing: -0.01em; color: var(--paper); margin: 0 0 12px;
+}
+.channel-desc { font-size: clamp(14px, 1.2vw, 17px); line-height: 1.5; color: var(--paper-50); margin: 0 0 clamp(20px, 2.4vw, 28px); }
+.channel-btn {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 10px;
+  background: var(--volt); color: var(--ink);
+  font-family: "JetBrains Mono", monospace; font-weight: 600; font-size: 13px;
+  letter-spacing: .04em; text-transform: uppercase;
+  padding: 12px 20px; border-radius: 4px; transition: transform .2s, filter .2s;
+}
+.channel-btn:hover { filter: brightness(1.08); }
+.channel-btn:hover .channel-arrow { transform: translateX(4px); }
+.channel-arrow { transition: transform .2s; }
+@media (max-width: 820px) {
+  .channels-grid { grid-template-columns: 1fr; }
+}

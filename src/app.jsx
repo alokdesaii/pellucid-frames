@@ -187,6 +187,7 @@ function App() {
         <ScrollScene />
         <Manifesto />
         <OrbitPassage />
+        <Channels />
         <ClosingCTA />
         <SiteFooter />
       </main>

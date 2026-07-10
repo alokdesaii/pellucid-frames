@@ -58,6 +58,21 @@ function WhatWeCreateApp() {
     document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
 
+  // Deep-anchor fix: the browser's on-load jump to #section fires before React
+  // has mounted the content (Babel compiles async), so it lands at the top.
+  // Re-scroll to the hash once the sections are actually in the DOM.
+  wcUseEffect(() => {
+    if (!depsLoaded) return;
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      // Panels are position:sticky, so scroll to the element's document
+      // position rather than scrollIntoView (more reliable for sticky).
+      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
+    });
+  }, [depsLoaded]);
+
   if (!depsLoaded) return null;
 
   const Nav = window.Nav;

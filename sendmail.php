@@ -6,20 +6,22 @@
 // guard against header injection + spam, then send. Returns JSON {ok:bool}.
 //
 // ─── CONFIG ────────────────────────────────────────────────────────────────
-$TO      = 'alok.desai@harbourandhills.com';  // where enquiries land (test)
-$FROM    = 'no-reply@pellucidframes.com';     // MUST be a @pellucidframes.com
-                                              // address so SPF/DKIM pass
-$SUBJECT = 'New enquiry via pellucidframes.com';
+$TO = 'hello@pellucidframes.com';          // where enquiries land
 
-// Upgrade path (only if hello@ is on an EXTERNAL provider — Google Workspace,
-// Zoho — and native mail() lands in spam): set USE_SMTP=true, drop PHPMailer
-// into ./lib/, and fill these. Left off by default — native mail() is reliable
-// for same-server delivery.
-$USE_SMTP  = false;
-$SMTP_HOST = 'localhost';
-$SMTP_USER = 'hello@pellucidframes.com';
-$SMTP_PASS = '';
-$SMTP_PORT = 587;
+// Email transport:
+//   USE_SMTP = false → native mail()       (cPanel: hello@ is a same-server mailbox)
+//   USE_SMTP = true  → authenticated SMTP  (only if the mailbox is off-server, e.g. Workspace)
+$USE_SMTP    = false;                             // native mail() on cPanel
+$SMTP_HOST   = 'mail.pellucidframes.com';         // used only if USE_SMTP = true
+$SMTP_PORT   = 465;                               // 465 = SSL, 587 = STARTTLS
+$SMTP_SECURE = 'ssl';                             // 'ssl' for 465, 'tls' for 587
+$SMTP_USER   = 'hello@pellucidframes.com';        // full mailbox to log in with
+$SMTP_PASS   = getenv('SMTP_PASS') ?: '';         // via env var, never committed
+
+// "From" is a pellucidframes.com address so SPF/DKIM align on the domain.
+$FROM      = 'no-reply@pellucidframes.com';
+$FROM_NAME = 'Pellucid Frames Website';
+$SUBJECT   = 'New enquiry via pellucidframes.com';
 // ─────────────────────────────────────────────────────────────────────────────
 
 header('Content-Type: application/json; charset=utf-8');
@@ -92,32 +94,14 @@ $subject = $SUBJECT . ' — ' . $safeName;
 $ok = false;
 
 if ($USE_SMTP) {
-    // Authenticated SMTP via PHPMailer (self-hosted lib, no external service).
-    // Only runs if you've placed PHPMailer in ./lib/ and set USE_SMTP=true.
-    require __DIR__ . '/lib/PHPMailer/PHPMailer.php';
-    require __DIR__ . '/lib/PHPMailer/SMTP.php';
-    require __DIR__ . '/lib/PHPMailer/Exception.php';
-    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = $SMTP_HOST;
-        $mail->SMTPAuth = true;
-        $mail->Username = $SMTP_USER;
-        $mail->Password = $SMTP_PASS;
-        $mail->Port = $SMTP_PORT;
-        $mail->SMTPSecure = 'tls';
-        $mail->setFrom($FROM, 'Pellucid Frames Website');
-        $mail->addAddress($TO);
-        $mail->addReplyTo($safeEmail, $safeName);
-        $mail->Subject = $subject;
-        $mail->Body = $body;
-        $ok = $mail->send();
-    } catch (\Throwable $e) {
-        $ok = false;
-    }
+    $ok = smtp_send([
+        'host' => $SMTP_HOST, 'port' => $SMTP_PORT, 'secure' => $SMTP_SECURE,
+        'user' => $SMTP_USER, 'pass' => $SMTP_PASS,
+        'from' => $FROM, 'fromName' => $FROM_NAME,
+    ], $TO, $subject, $body, $safeName, $safeEmail);
 } else {
-    // Native mail() — reliable for same-server delivery to the studio mailbox.
-    $headers  = "From: Pellucid Frames Website <$FROM>\r\n";
+    // Native mail() — reliable for same-server delivery on cPanel.
+    $headers  = "From: $FROM_NAME <$FROM>\r\n";
     $headers .= "Reply-To: $safeName <$safeEmail>\r\n";
     $headers .= "Content-Type: text/plain; charset=utf-8\r\n";
     $headers .= "X-Mailer: PHP/" . phpversion();
@@ -130,4 +114,67 @@ if ($ok) {
 } else {
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => 'Mail send failed']);
+}
+
+// ── Minimal authenticated SMTP client (no external library) ──────────────────
+// Speaks just enough SMTP to log in and send one plain-text message. Handles
+// both implicit SSL (port 465) and STARTTLS (port 587).
+function smtp_send($cfg, $to, $subject, $body, $replyName, $replyEmail) {
+    $eol = "\r\n";
+    $remote = ($cfg['secure'] === 'ssl' ? 'ssl://' : '') . $cfg['host'] . ':' . $cfg['port'];
+    $ctx = stream_context_create(['ssl' => [
+        'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true,
+    ]]);
+    $fp = @stream_socket_client($remote, $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $ctx);
+    if (!$fp) return false;
+    stream_set_timeout($fp, 15);
+
+    $read = function () use ($fp) {
+        $data = '';
+        while (($line = fgets($fp, 515)) !== false) {
+            $data .= $line;
+            if (isset($line[3]) && $line[3] === ' ') break; // final line of reply
+        }
+        return $data;
+    };
+    $cmd = function ($line, $expect) use ($fp, $read, $eol) {
+        if ($line !== null) fwrite($fp, $line . $eol);
+        return substr($read(), 0, 3) === $expect;
+    };
+
+    $fail = function () use ($fp) { fclose($fp); return false; };
+
+    if (!$cmd(null, '220')) return $fail();               // server greeting
+    if (!$cmd('EHLO localhost', '250')) return $fail();
+
+    if ($cfg['secure'] === 'tls') {                        // STARTTLS upgrade
+        if (!$cmd('STARTTLS', '220')) return $fail();
+        if (!stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) return $fail();
+        if (!$cmd('EHLO localhost', '250')) return $fail();
+    }
+
+    if (!$cmd('AUTH LOGIN', '334')) return $fail();
+    if (!$cmd(base64_encode($cfg['user']), '334')) return $fail();
+    if (!$cmd(base64_encode($cfg['pass']), '235')) return $fail();
+
+    if (!$cmd('MAIL FROM:<' . $cfg['from'] . '>', '250')) return $fail();
+    if (!$cmd('RCPT TO:<' . $to . '>', '250')) return $fail();
+    if (!$cmd('DATA', '354')) return $fail();
+
+    $encSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+    $headers =
+        'From: ' . $cfg['fromName'] . ' <' . $cfg['from'] . '>' . $eol .
+        'To: <' . $to . '>' . $eol .
+        'Reply-To: ' . $replyName . ' <' . $replyEmail . '>' . $eol .
+        'Subject: ' . $encSubject . $eol .
+        'MIME-Version: 1.0' . $eol .
+        'Content-Type: text/plain; charset=utf-8' . $eol .
+        'Content-Transfer-Encoding: 8bit' . $eol;
+    // Normalise newlines + dot-stuff lines starting with '.'
+    $safeBody = preg_replace('/^\./m', '..', str_replace("\n", $eol, $body));
+    fwrite($fp, $headers . $eol . $safeBody . $eol . '.' . $eol);
+    $sent = $cmd(null, '250');
+    $cmd('QUIT', '221');
+    fclose($fp);
+    return $sent;
 }

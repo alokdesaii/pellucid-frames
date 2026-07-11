@@ -3,7 +3,7 @@
 // `submitEnquiry` for a fetch to a form endpoint (Formspree, etc.) when ready.
 const { useState: ctUseState, useEffect: ctUseEffect } = React;
 
-const CT_EMAIL = "alok.desai@harbourandhills.com";
+const CT_EMAIL = "hello@pellucidframes.com";
 
 // Flip to true once the social profiles are live to show the "Elsewhere" links.
 const CT_SHOW_SOCIALS = false;

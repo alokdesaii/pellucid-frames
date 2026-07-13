@@ -6,7 +6,7 @@ const { useState: ctUseState, useEffect: ctUseEffect } = React;
 const CT_EMAIL = "hello@pellucidframes.com";
 
 // Flip to true once the social profiles are live to show the "Elsewhere" links.
-const CT_SHOW_SOCIALS = false;
+const CT_SHOW_SOCIALS = true;
 
 const CT_PROJECT_TYPES = [
   "Original Film", "Documentary", "Brand Campaign", "Corporate Storytelling",
@@ -257,9 +257,8 @@ function ContactApp() {
               <div className="ct-info-block">
                 <span className="ct-info-label">Elsewhere</span>
                 <div className="ct-socials">
-                  <a href="#" target="_blank" rel="noopener">Instagram</a>
-                  <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-                  <a href="#" target="_blank" rel="noopener">YouTube</a>
+                  <a href="https://www.facebook.com/profile.php?id=61591650788062" target="_blank" rel="noopener">Facebook</a>
+                  <a href="https://www.linkedin.com/company/pellucid-frames/" target="_blank" rel="noopener">LinkedIn</a>
                 </div>
               </div>
             )}

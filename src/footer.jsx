@@ -61,8 +61,9 @@ function SiteFooter() {
             <a href="/capital-shiftz.html">CapitalShiftz</a>
             <a href="/bloomy-toony.html">Bloomy Toony</a>
             <div className="flex gap-3 mt-4 border-t border-white/5 pt-4">
-              <a href="#" target="_blank" rel="noopener" aria-label="Instagram" className="text-xs opacity-60 hover:opacity-100 transition-opacity">Instagram</a>
-              <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn" className="text-xs opacity-60 hover:opacity-100 transition-opacity">LinkedIn</a>
+              <a href="https://www.instagram.com/pellucid_frames/" target="_blank" rel="noopener" aria-label="Instagram" className="text-xs opacity-60 hover:opacity-100 transition-opacity">Instagram</a>
+              <a href="https://www.facebook.com/profile.php?id=61591650788062" target="_blank" rel="noopener" aria-label="Facebook" className="text-xs opacity-60 hover:opacity-100 transition-opacity">Facebook</a>
+              <a href="https://www.linkedin.com/company/pellucid-frames/" target="_blank" rel="noopener" aria-label="LinkedIn" className="text-xs opacity-60 hover:opacity-100 transition-opacity">LinkedIn</a>
             </div>
           </FootCol>
         </div>

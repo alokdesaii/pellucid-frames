@@ -257,6 +257,7 @@ function ContactApp() {
               <div className="ct-info-block">
                 <span className="ct-info-label">Elsewhere</span>
                 <div className="ct-socials">
+                  <a href="https://www.instagram.com/pellucid_frames/" target="_blank" rel="noopener">Instagram</a>
                   <a href="https://www.facebook.com/profile.php?id=61591650788062" target="_blank" rel="noopener">Facebook</a>
                   <a href="https://www.linkedin.com/company/pellucid-frames/" target="_blank" rel="noopener">LinkedIn</a>
                 </div>

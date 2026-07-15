@@ -58,19 +58,26 @@ function WhatWeCreateApp() {
     document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
 
-  // Deep-anchor fix: the browser's on-load jump to #section fires before React
-  // has mounted the content (Babel compiles async), so it lands at the top.
-  // Re-scroll to the hash once the sections are actually in the DOM.
+  // Deep-anchor fix. Two cases both need a manual scroll:
+  //  1. On load — the browser's jump to #section fires before React mounts the
+  //     content (Babel compiles async), so it lands at the top.
+  //  2. Same-page links (e.g. the footer, which lives on this page) only change
+  //     the hash without reloading, and the native jump is unreliable on the
+  //     position:sticky panels.
+  // Handle both by scrolling on mount and on every hashchange.
   wcUseEffect(() => {
     if (!depsLoaded) return;
-    const id = window.location.hash.slice(1);
-    if (!id) return;
-    requestAnimationFrame(() => {
-      const el = document.getElementById(id);
-      // Panels are position:sticky, so scroll to the element's document
-      // position rather than scrollIntoView (more reliable for sticky).
-      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
-    });
+    const scrollToHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return;
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
+      });
+    };
+    scrollToHash();
+    window.addEventListener("hashchange", scrollToHash);
+    return () => window.removeEventListener("hashchange", scrollToHash);
   }, [depsLoaded]);
 
   if (!depsLoaded) return null;

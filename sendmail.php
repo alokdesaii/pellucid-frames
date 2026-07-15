@@ -10,16 +10,18 @@ $TO = 'hello@pellucidframes.com';          // where enquiries land
 
 // Email transport:
 //   USE_SMTP = false → native mail()       (cPanel: hello@ is a same-server mailbox)
-//   USE_SMTP = true  → authenticated SMTP  (only if the mailbox is off-server, e.g. Workspace)
-$USE_SMTP    = false;                             // native mail() on cPanel
-$SMTP_HOST   = 'mail.pellucidframes.com';         // used only if USE_SMTP = true
+//   USE_SMTP = true  → authenticated SMTP  (mailbox is off-server — our Google Workspace)
+$USE_SMTP    = true;                              // send through Google Workspace
+$SMTP_HOST   = 'smtp.gmail.com';                  // Google Workspace SMTP
 $SMTP_PORT   = 465;                               // 465 = SSL, 587 = STARTTLS
 $SMTP_SECURE = 'ssl';                             // 'ssl' for 465, 'tls' for 587
+// Must be a REAL Workspace mailbox (not a group/alias) with an App Password.
 $SMTP_USER   = 'hello@pellucidframes.com';        // full mailbox to log in with
-$SMTP_PASS   = getenv('SMTP_PASS') ?: '';         // via env var, never committed
+$SMTP_PASS   = getenv('SMTP_PASS') ?: '';         // App Password — via env var, never committed
 
-// "From" is a pellucidframes.com address so SPF/DKIM align on the domain.
-$FROM      = 'no-reply@pellucidframes.com';
+// Gmail rewrites From to the authenticated account, so From must equal SMTP_USER
+// (or a verified "Send mail as" alias of it). Reply-To carries the enquirer's address.
+$FROM      = 'hello@pellucidframes.com';
 $FROM_NAME = 'Pellucid Frames Website';
 $SUBJECT   = 'New enquiry via pellucidframes.com';
 // ─────────────────────────────────────────────────────────────────────────────

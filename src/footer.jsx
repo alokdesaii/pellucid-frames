@@ -38,6 +38,7 @@ function SiteFooter() {
             <a href="/why-pellucid.html">Why Pellucid</a>
             <a href="/our-philosophy.html">Our Philosophy</a>
             <a href="/our-work.html">Our Work</a>
+            <a href="/media-kit.html">Media Kit / Press Centre</a>
             <a href="/contact.html">Contact</a>
           </FootCol>
 
@@ -48,13 +49,6 @@ function SiteFooter() {
             <a href="/what-we-create.html#digital-media">Digital Media</a>
             <a href="/what-we-create.html#live-experiences">Live Experiences</a>
             <a href="/what-we-create.html#creative-strategy">Creative Strategy</a>
-          </FootCol>
-
-          <FootCol title="MEDIA KIT / PRESS CENTRE" href="/media-kit.html">
-            <a href="/media-kit.html">Brands Overview</a>
-            <a href="/about.html" className="sf-sublink">Pellucid Frames</a>
-            <a href="/capital-shiftz.html" className="sf-sublink">CapitalShiftz</a>
-            <a href="/bloomy-toony.html"        className="sf-sublink">Bloomy Toony</a>
           </FootCol>
 
           <FootCol title="OUR YOUTUBE CHANNELS">

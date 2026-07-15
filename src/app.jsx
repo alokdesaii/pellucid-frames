@@ -60,6 +60,7 @@ function MenuOverlay({ isOpen, onClose }) {
               <a href="/why-pellucid.html" className="stagger-4" onClick={onClose}>Why Pellucid</a>
               <a href="/our-philosophy.html" className="stagger-5" onClick={onClose}>Our Philosophy</a>
               <a href="/our-work.html" className="stagger-6" onClick={onClose}>Our Work</a>
+              <a href="/media-kit.html" className="stagger-7" onClick={onClose}>Media Kit / Press Centre</a>
             </nav>
           </div>
 
@@ -85,18 +86,6 @@ function MenuOverlay({ isOpen, onClose }) {
               <a href="/what-we-create.html#digital-media" className="stagger-5" onClick={onClose}>Digital Media</a>
               <a href="/what-we-create.html#live-experiences" className="stagger-6" onClick={onClose}>Live Experiences</a>
               <a href="/what-we-create.html#creative-strategy" className="stagger-7" onClick={onClose}>Creative Strategy</a>
-            </div>
-          </div>
-
-          <div className="menu-divider" />
-
-          <div>
-            <a href="/media-kit.html" className="menu-section-label menu-section-link stagger-8" onClick={onClose}>Media Kit / Press Centre</a>
-            <div className="menu-secondary-links" style={{marginTop:"14px"}}>
-              <a href="/media-kit.html" className="stagger-9"  onClick={onClose}>Brands Overview</a>
-              <a href="/about.html" className="sub-link stagger-10" onClick={onClose}>Pellucid Frames</a>
-              <a href="/capital-shiftz.html" className="sub-link stagger-10" onClick={onClose}>Capital Shiftz</a>
-              <a href="/bloomy-toony.html"        className="sub-link stagger-10" onClick={onClose}>Bloomy Toony</a>
             </div>
           </div>
         </div>

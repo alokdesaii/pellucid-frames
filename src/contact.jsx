@@ -1,6 +1,6 @@
 // Contact — split layout with a 3-step enquiry form (Enerblock-style, our
-// palette). No backend: submit composes a prefilled email to hello@. Swap
-// `submitEnquiry` for a fetch to a form endpoint (Formspree, etc.) when ready.
+// palette). Submit POSTs JSON to sendmail.php, which relays via Google
+// Workspace SMTP to hello@. On failure it shows an inline error (no fallback).
 const { useState: ctUseState, useEffect: ctUseEffect } = React;
 
 const CT_EMAIL = "hello@pellucidframes.com";
@@ -25,9 +25,8 @@ const CT_EMPTY = {
   website: "", // honeypot — must stay empty; bots fill it
 };
 
-// Server-side form handler (PHP on the host). Submissions POST here and land in
-// the studio inbox. If it's ever unreachable (e.g. previewing on a static
-// server with no PHP), the form falls back to a prefilled mailto:.
+// Server-side form handler (PHP on the host). Submissions POST here and are
+// relayed to the studio inbox via Google Workspace SMTP.
 const CT_ENDPOINT = "/sendmail.php";
 
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -38,6 +37,7 @@ function ContactForm() {
   const [errs, setErrs] = ctUseState({});
   const [done, setDone] = ctUseState(false);
   const [sending, setSending] = ctUseState(false);
+  const [sendError, setSendError] = ctUseState(false);
 
   const set = (k) => (e) => {
     setF((prev) => ({ ...prev, [k]: e.target.value }));
@@ -63,33 +63,10 @@ function ContactForm() {
   const next = () => { if (validate()) setStep((s) => Math.min(s + 1, 2)); };
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
-  // Prefilled mailto — used as the fallback if the PHP endpoint is unreachable.
-  const mailtoHref = () => {
-    const body = [
-      `Name: ${f.name}`,
-      `Email: ${f.email}`,
-      `Phone: ${f.phone || "—"}`,
-      `Company / Organization: ${f.company || "—"}`,
-      "",
-      `Project type: ${f.projectType}`,
-      `Budget: ${f.budget || "—"}`,
-      `Timeline: ${f.timeline || "—"}`,
-      "",
-      "About the project:",
-      f.message,
-      "",
-      `Heard about us via: ${f.referral || "—"}`,
-    ].join("\n");
-    return (
-      `mailto:${CT_EMAIL}` +
-      `?subject=${encodeURIComponent(`New enquiry — ${f.name}`)}` +
-      `&body=${encodeURIComponent(body)}`
-    );
-  };
-
   const submitEnquiry = async () => {
     if (!validate() || sending) return;
     setSending(true);
+    setSendError(false);
     try {
       const res = await fetch(CT_ENDPOINT, {
         method: "POST",
@@ -100,9 +77,8 @@ function ContactForm() {
       if (res.ok && data.ok) { setDone(true); return; }
       throw new Error(data.error || "send failed");
     } catch (err) {
-      // Endpoint down / no PHP (e.g. local static preview) → open mail client.
-      window.location.href = mailtoHref();
-      setDone(true);
+      // Show an inline error and let the user retry — no mail-client fallback.
+      setSendError(true);
     } finally {
       setSending(false);
     }
@@ -189,6 +165,12 @@ function ContactForm() {
       )}
 
       {stepErr && <div className="ct-err-msg">{stepErr}</div>}
+      {sendError && (
+        <div className="ct-err-msg">
+          Something went wrong sending your enquiry. Please try again, or email us
+          directly at <a href={`mailto:${CT_EMAIL}`} style={{ color: "var(--volt)" }}>{CT_EMAIL}</a>.
+        </div>
+      )}
 
       <div className="ct-actions">
         {step > 0 && (

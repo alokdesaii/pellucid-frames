@@ -62,17 +62,32 @@ function WhatWeCreateApp() {
   //  1. On load — the browser's jump to #section fires before React mounts the
   //     content (Babel compiles async), so it lands at the top.
   //  2. Same-page links (e.g. the footer, which lives on this page) only change
-  //     the hash without reloading, and the native jump is unreliable on the
-  //     position:sticky panels.
+  //     the hash without reloading, and the native jump is unreliable here.
   // Handle both by scrolling on mount and on every hashchange.
+  //
+  // The panels are position:sticky, so offsetTop AND getBoundingClientRect both
+  // report a panel's *stuck* position, which shifts with the current scroll —
+  // scrolling to that from the footer landed on the wrong panel. offsetHeight is
+  // immune to sticky, so we derive the panel's true resting Y from the stack's
+  // document top plus the heights of the panels before it.
   wcUseEffect(() => {
     if (!depsLoaded) return;
+    const naturalTop = (el) => {
+      const panels = Array.from(document.querySelectorAll(".wc-panel"));
+      const i = panels.indexOf(el);
+      if (i < 0) return null;
+      let y = 0;
+      for (let n = el.offsetParent; n; n = n.offsetParent) y += n.offsetTop; // stack doc top
+      for (let k = 0; k < i; k++) y += panels[k].offsetHeight;               // panels above
+      return y;
+    };
     const scrollToHash = () => {
       const id = window.location.hash.slice(1);
       if (!id) return;
       requestAnimationFrame(() => {
         const el = document.getElementById(id);
-        if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
+        const y = el && naturalTop(el);
+        if (y != null) window.scrollTo(0, y);
       });
     };
     scrollToHash();

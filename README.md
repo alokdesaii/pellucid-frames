@@ -90,6 +90,8 @@ same pattern independently for their own sections.
 .
 ├── index.html              home page
 ├── about.html               about page
+├── contact.html             contact page
+├── contact.php              PHP contact form mailer
 ├── src/
 │   ├── app.jsx               nav, chrome, overlay menu — loads last
 │   ├── scrollscene.jsx        scroll-track progress controller
@@ -103,7 +105,8 @@ same pattern independently for their own sections.
 │   ├── footer.jsx                  animated-border footer
 │   ├── icons.jsx                    inline Lucide-style icon set
 │   ├── image-slot.js                drag/crop custom element
-│   └── about.jsx                    about page component
+│   ├── about.jsx                    about page component
+│   └── contact.jsx                  contact page form component
 ├── css/styles.css           global styles & design tokens
 ├── assets/                  SVG logos and symbols
 ├── uploads/                 image & video content

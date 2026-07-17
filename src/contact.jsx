@@ -1,9 +1,10 @@
 // Contact — split layout with a 3-step enquiry form (Enerblock-style, our
-// palette). Submit POSTs JSON to sendmail.php, which relays via Google
-// Workspace SMTP to hello@. On failure it shows an inline error (no fallback).
+// palette). On submit it fetches a reCAPTCHA v3 token and POSTs the form fields
+// + token as JSON to the backend API (built + hosted by IT), matching the
+// house pattern used on birchford.com. Success is { isSuccess: true }.
 const { useState: ctUseState, useEffect: ctUseEffect } = React;
 
-const CT_EMAIL = "hello@pellucidframes.com";
+const CT_EMAIL = "alok.desai@harbourandhills.com";
 
 // Flip to true once the social profiles are live to show the "Elsewhere" links.
 const CT_SHOW_SOCIALS = true;
@@ -25,11 +26,44 @@ const CT_EMPTY = {
   website: "", // honeypot — must stay empty; bots fill it
 };
 
-// Server-side form handler (PHP on the host). Submissions POST here and are
-// relayed to the studio inbox via Google Workspace SMTP.
-const CT_ENDPOINT = "/sendmail.php";
+// ── Backend config ──────────────────────────────────────────────────────────
+// Endpoint that receives the enquiry (pointed to local contact.php script).
+const CT_ENDPOINT = "contact.php";
+// reCAPTCHA v3 site key from IT (public — the secret stays server-side). Leave
+// "" to skip reCAPTCHA (e.g. local testing); the token is then sent empty.
+const CT_RECAPTCHA_SITE_KEY = "";
+const CT_RECAPTCHA_ACTION = "contact_form_submit";
+// ─────────────────────────────────────────────────────────────────────────────
 
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+// Lazy-load Google reCAPTCHA v3 once (only if a site key is configured).
+let ctRecaptchaPromise = null;
+function ctLoadRecaptcha() {
+  if (!CT_RECAPTCHA_SITE_KEY) return Promise.resolve(null);
+  if (ctRecaptchaPromise) return ctRecaptchaPromise;
+  ctRecaptchaPromise = new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = `https://www.google.com/recaptcha/api.js?render=${CT_RECAPTCHA_SITE_KEY}`;
+    s.async = true;
+    s.onload = () => resolve(window.grecaptcha || null);
+    s.onerror = () => resolve(null);
+    document.head.appendChild(s);
+  });
+  return ctRecaptchaPromise;
+}
+
+// Returns a fresh reCAPTCHA token, or "" if reCAPTCHA isn't configured/available.
+async function ctRecaptchaToken() {
+  const g = await ctLoadRecaptcha();
+  if (!g) return "";
+  try {
+    await new Promise((r) => g.ready(r));
+    return await g.execute(CT_RECAPTCHA_SITE_KEY, { action: CT_RECAPTCHA_ACTION });
+  } catch {
+    return "";
+  }
+}
 
 function ContactForm() {
   const [step, setStep] = ctUseState(0);
@@ -38,6 +72,9 @@ function ContactForm() {
   const [done, setDone] = ctUseState(false);
   const [sending, setSending] = ctUseState(false);
   const [sendError, setSendError] = ctUseState(false);
+
+  // Preload reCAPTCHA (no-op if no site key configured) so a token is ready fast.
+  ctUseEffect(() => { ctLoadRecaptcha(); }, []);
 
   const set = (k) => (e) => {
     setF((prev) => ({ ...prev, [k]: e.target.value }));
@@ -65,17 +102,25 @@ function ContactForm() {
 
   const submitEnquiry = async () => {
     if (!validate() || sending) return;
+    // Honeypot — a filled hidden field means a bot; pretend success, send nothing.
+    if (f.website) { setDone(true); return; }
+    // No endpoint yet (IT hasn't delivered the API) → don't POST nowhere.
+    if (!CT_ENDPOINT) { setSendError(true); return; }
     setSending(true);
     setSendError(false);
     try {
+      const recaptchaToken = await ctRecaptchaToken();
+      // Send the form fields (minus the honeypot) + token, matching the API contract.
+      const { website, ...fields } = f;
       const res = await fetch(CT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(f),
+        body: JSON.stringify({ ...fields, recaptchaToken }),
       });
       const data = await res.json().catch(() => ({}));
-      if (res.ok && data.ok) { setDone(true); return; }
-      throw new Error(data.error || "send failed");
+      // Backend signals success with { isSuccess: true } (birchford pattern).
+      if (res.ok && (data.isSuccess || data.ok)) { setDone(true); return; }
+      throw new Error("send failed");
     } catch (err) {
       // Show an inline error and let the user retry — no mail-client fallback.
       setSendError(true);

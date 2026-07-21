@@ -1,8 +1,21 @@
 <?php
 header('Content-Type: application/json');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once __DIR__ . '/libs/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/libs/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/libs/PHPMailer/src/SMTP.php';
+
+// Load SMTP configuration if available
+$smtp_config = [];
+if (file_exists(__DIR__ . '/smtp_config.php')) {
+    $smtp_config = require __DIR__ . '/smtp_config.php';
+}
+
 // Set target email address
-$to = "alok.desai@harbourandhills.com";
+$to = isset($smtp_config['ToEmail']) ? $smtp_config['ToEmail'] : "alok.desai@harbourandhills.com";
 
 // Only accept POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -13,6 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Parse JSON input payload
 $inputJSON = file_get_contents('php://input');
+if (empty($inputJSON) && php_sapi_name() === 'cli') {
+    $inputJSON = file_get_contents('php://stdin');
+}
 $input = json_decode($inputJSON, true);
 
 if ($input === null) {
@@ -74,24 +90,47 @@ $email_message .= "Referral Source:\n";
 $email_message .= "---------------------------------------\n";
 $email_message .= ($referral ?: "Not provided") . "\n";
 
-// Set mail headers
-$headers = [
-    "From: Pellucid Frames <no-reply@pellucidframes.com>",
-    "Reply-To: $name <$email>",
-    "MIME-Version: 1.0",
-    "Content-Type: text/plain; charset=UTF-8",
-    "X-Mailer: PHP/" . phpversion()
-];
-$headers_str = implode("\r\n", $headers);
+// Dispatch the email using PHPMailer (with SMTP if host configured)
+$mail = new PHPMailer(true);
 
-// Dispatch the email
-if (@mail($to, $subject, $email_message, $headers_str)) {
+try {
+    if (!empty($smtp_config['Host'])) {
+        $mail->isSMTP();
+        $mail->Host       = $smtp_config['Host'];
+        $mail->SMTPAuth   = isset($smtp_config['SMTPAuth']) ? $smtp_config['SMTPAuth'] : true;
+        $mail->Username   = isset($smtp_config['Username']) ? $smtp_config['Username'] : '';
+        $mail->Password   = isset($smtp_config['Password']) ? $smtp_config['Password'] : '';
+        
+        if (isset($smtp_config['SMTPSecure'])) {
+            if (strtolower($smtp_config['SMTPSecure']) === 'tls') {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            } elseif (strtolower($smtp_config['SMTPSecure']) === 'ssl') {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            }
+        }
+        $mail->Port       = isset($smtp_config['Port']) ? $smtp_config['Port'] : 587;
+    }
+
+    // Sender and Recipient
+    $from_email = isset($smtp_config['FromEmail']) ? $smtp_config['FromEmail'] : 'no-reply@pellucidframes.com';
+    $from_name  = isset($smtp_config['FromName']) ? $smtp_config['FromName'] : 'Pellucid Frames Website';
+    $mail->setFrom($from_email, $from_name);
+    $mail->addAddress($to);
+    $mail->addReplyTo($email, $name);
+
+    // Content
+    $mail->isHTML(false); // plain text body
+    $mail->Subject = $subject;
+    $mail->Body    = $email_message;
+    $mail->CharSet = 'UTF-8';
+
+    $mail->send();
     echo json_encode(['isSuccess' => true]);
-} else {
+} catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
         'isSuccess' => false,
-        'error' => 'Failed to send email. Please try again or contact hello@pellucidframes.com directly.'
+        'error' => 'Failed to send email. Please try again or contact hello@pellucidframes.com directly. Details: ' . $mail->ErrorInfo
     ]);
 }
 ?>

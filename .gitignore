@@ -7,4 +7,3 @@ website-pellucid.zip
 *.zip
 
 # Local SMTP credentials configuration (private)
-smtp_config.php

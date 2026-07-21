@@ -213,7 +213,7 @@ function ContactForm() {
       {sendError && (
         <div className="ct-err-msg">
           Something went wrong sending your enquiry. Please try again, or email us
-          directly at <a href={`mailto:${CT_EMAIL}`} style={{ color: "var(--volt)" }}>{CT_EMAIL}</a>.
+          directly at <span style={{ color: "var(--volt)" }}>{CT_EMAIL}</span>.
         </div>
       )}
 

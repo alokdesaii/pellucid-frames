@@ -1,6 +1,5 @@
 <?php
 // SMTP Credentials configuration
-// This file contains secrets and is gitignored. Do not commit it to Git.
 
 return [
     'Host' => 'smtp.sendgrid.net',

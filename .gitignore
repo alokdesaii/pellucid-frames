@@ -5,5 +5,3 @@ node_modules/
 # never commit the exported site archive
 website-pellucid.zip
 *.zip
-
-# Local SMTP credentials configuration (private)

@@ -127,10 +127,12 @@ try {
     $mail->send();
     echo json_encode(['isSuccess' => true]);
 } catch (Exception $e) {
+    $errorDetails = $mail->ErrorInfo ?: $e->getMessage();
+    @file_put_contents(__DIR__ . '/contact_error.log', date('[Y-m-d H:i:s] ') . $errorDetails . "\n", FILE_APPEND);
     http_response_code(500);
     echo json_encode([
         'isSuccess' => false,
-        'error' => 'Failed to send email. Please try again or contact hello@pellucidframes.com directly. Details: ' . $mail->ErrorInfo
+        'error' => 'Failed to send email: ' . $errorDetails
     ]);
 }
 ?>

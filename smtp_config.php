@@ -10,5 +10,5 @@ return [
     'Port' => 587,
     'FromEmail' => 'info@pellucidframes.com',
     'FromName' => 'Pellucid Frames Website',
-    'ToEmail' => 'hello@pellucidframes.com'
+    'ToEmail' => 'alok.desai@harbourandhills.com'
 ];

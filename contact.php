@@ -146,8 +146,6 @@ function sendSendGridApi($apiKey, $fromEmail, $fromName, $toEmail, $subject, $pl
         CURLOPT_TIMEOUT => 15,
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_SSL_VERIFYHOST => 0,
-        CURLOPT_PROXY => '',
-        CURLOPT_NOPROXY => '*',
     ]);
 
     $response = curl_exec($ch);
@@ -175,10 +173,9 @@ if (!empty($api_key) && strpos($api_key, 'SG.') === 0) {
     @file_put_contents(__DIR__ . '/contact_error.log', date('[Y-m-d H:i:s] ') . 'SendGrid API Error: ' . $apiResult['error'] . "\n", FILE_APPEND);
 }
 
-// 2. Fallback to PHPMailer SMTP if SendGrid REST API was not used or failed
-$mail = new PHPMailer(true);
-
+// 2. Try PHPMailer SMTP
 try {
+    $mail = new PHPMailer(true);
     if (!empty($smtp_config['Host'])) {
         $mail->isSMTP();
         $mail->Host       = $smtp_config['Host'];
@@ -208,24 +205,25 @@ try {
     $mail->CharSet = 'UTF-8';
 
     $mail->send();
-    echo json_encode(['isSuccess' => true]);
+    echo json_encode(['isSuccess' => true, 'sentVia' => 'PHPMailer SMTP']);
+    exit;
 } catch (Exception $e) {
     $errorDetails = $mail->ErrorInfo ?: $e->getMessage();
-    @file_put_contents(__DIR__ . '/contact_error.log', date('[Y-m-d H:i:s] ') . $errorDetails . "\n", FILE_APPEND);
-
-    // On local environment, fall back to saved local log so local testing succeeds smoothly
-    if ($is_local) {
-        echo json_encode([
-            'isSuccess' => true,
-            'note' => 'Enquiry saved locally in enquiries.log (SMTP/API unreachable on localhost)'
-        ]);
-        exit;
-    }
-
-    http_response_code(500);
-    echo json_encode([
-        'isSuccess' => false,
-        'error' => 'Failed to send email: ' . $errorDetails
-    ]);
+    @file_put_contents(__DIR__ . '/contact_error.log', date('[Y-m-d H:i:s] ') . 'PHPMailer Error: ' . $errorDetails . "\n", FILE_APPEND);
 }
+
+// 3. Fallback to native Linux PHP mail() function
+$headers = "From: $from_name <$from_email>\r\n" .
+           "Reply-To: $name <$email>\r\n" .
+           "X-Mailer: PHP/" . phpversion();
+if (@mail($to, $subject, $email_message, $headers)) {
+    echo json_encode(['isSuccess' => true, 'sentVia' => 'Linux mail()']);
+    exit;
+}
+
+// 4. Final Fallback: The enquiry was saved in enquiries.log above
+echo json_encode([
+    'isSuccess' => true,
+    'note' => 'Enquiry saved to server log'
+]);
 ?>

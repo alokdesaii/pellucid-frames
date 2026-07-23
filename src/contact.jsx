@@ -27,8 +27,9 @@ const CT_EMPTY = {
 };
 
 // ── Backend config ──────────────────────────────────────────────────────────
-// Endpoint that receives the enquiry (pointed to local contact.php script).
-const CT_ENDPOINT = "contact.php";
+// ── Backend config ──────────────────────────────────────────────────────────
+// Endpoints that receive the enquiry (tries Vercel /api/contact function first, then local/PHP contact.php).
+const CT_ENDPOINTS = ["api/contact", "contact.php"];
 // reCAPTCHA v3 site key from IT (public — the secret stays server-side). Leave
 // "" to skip reCAPTCHA (e.g. local testing); the token is then sent empty.
 const CT_RECAPTCHA_SITE_KEY = "";
@@ -104,25 +105,40 @@ function ContactForm() {
     if (!validate() || sending) return;
     // Honeypot — a filled hidden field means a bot; pretend success, send nothing.
     if (f.website) { setDone(true); return; }
-    // No endpoint yet (IT hasn't delivered the API) → don't POST nowhere.
-    if (!CT_ENDPOINT) { setSendError(true); return; }
     setSending(true);
     setSendError(false);
     try {
       const recaptchaToken = await ctRecaptchaToken();
       // Send the form fields (minus the honeypot) + token, matching the API contract.
       const { website, ...fields } = f;
-      const res = await fetch(CT_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...fields, recaptchaToken }),
-      });
-      const data = await res.json().catch(() => ({}));
-      // Backend signals success with { isSuccess: true } (birchford pattern).
-      if (res.ok && (data.isSuccess || data.ok)) { setDone(true); return; }
-      throw new Error("send failed");
+      const payload = JSON.stringify({ ...fields, recaptchaToken });
+
+      let success = false;
+      for (const endpoint of CT_ENDPOINTS) {
+        try {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: payload,
+          });
+          if (res.status === 404 || res.status === 405) continue;
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && (data.isSuccess || data.ok)) {
+            success = true;
+            break;
+          }
+        } catch {
+          // Continue to next endpoint if request fails
+        }
+      }
+
+      if (success) {
+        setDone(true);
+      } else {
+        throw new Error("send failed");
+      }
     } catch (err) {
-      // Show an inline error and let the user retry — no mail-client fallback.
+      // Show an inline error and let the user retry
       setSendError(true);
     } finally {
       setSending(false);

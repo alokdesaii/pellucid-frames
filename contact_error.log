@@ -1,0 +1,16 @@
+[2026-07-23 08:44:51] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:46:48] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:47:35] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:49:01] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:50:07] SendGrid API Error: SendGrid API HTTP 0: CONNECT tunnel failed, response 0
+[2026-07-23 08:50:07] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:50:56] SendGrid API Error: SendGrid API HTTP 0: CONNECT tunnel failed, response 0
+[2026-07-23 08:50:56] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:52:12] SendGrid API Error: SendGrid API HTTP 0: CONNECT tunnel failed, response 0
+[2026-07-23 08:52:12] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:53:10] SendGrid API Error: SendGrid API HTTP 0: CONNECT tunnel failed, response 0
+[2026-07-23 08:53:10] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:54:37] SendGrid API Error: SendGrid API HTTP 0: Could not resolve host: api.sendgrid.com
+[2026-07-23 08:54:37] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-23 08:57:20] SendGrid API Error: SendGrid API HTTP 0: Could not resolve host: api.sendgrid.com
+[2026-07-23 08:57:20] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known

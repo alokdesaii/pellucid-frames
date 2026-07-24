@@ -27,9 +27,8 @@ const CT_EMPTY = {
 };
 
 // ── Backend config ──────────────────────────────────────────────────────────
-// ── Backend config ──────────────────────────────────────────────────────────
-// Endpoints that receive the enquiry (tries Linux PHP contact.php first, then api/contact).
-const CT_ENDPOINTS = ["contact.php", "api/contact"];
+// Endpoint that receives the enquiry — the Linux PHP handler (contact.php).
+const CT_ENDPOINTS = ["contact.php"];
 // reCAPTCHA v3 site key from IT (public — the secret stays server-side). Leave
 // "" to skip reCAPTCHA (e.g. local testing); the token is then sent empty.
 const CT_RECAPTCHA_SITE_KEY = "";

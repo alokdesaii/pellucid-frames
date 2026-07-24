@@ -14,3 +14,11 @@
 [2026-07-23 08:54:37] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
 [2026-07-23 08:57:20] SendGrid API Error: SendGrid API HTTP 0: Could not resolve host: api.sendgrid.com
 [2026-07-23 08:57:20] SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-24 09:52:08] SendGrid API Error: SendGrid API HTTP 0: CONNECT tunnel failed, response 0
+[2026-07-24 09:52:08] PHPMailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.sendgrid.net failed: nodename nor servname provided, or not known
+[2026-07-24 09:56:01] SendGrid API Error: SendGrid API HTTP 401: {"errors":[{"message":"The provided authorization grant is invalid, expired, or revoked","field":null,"help":null}]}
+[2026-07-24 09:56:03] PHPMailer Error: SMTP Error: Could not authenticate.SMTP server error: QUIT command failed
+[2026-07-24 10:50:57] SendGrid API Error: SendGrid API HTTP 401: {"errors":[{"message":"The provided authorization grant is invalid, expired, or revoked","field":null,"help":null}]}
+[2026-07-24 10:50:58] PHPMailer Error: SMTP Error: Could not authenticate.SMTP server error: QUIT command failed
+[2026-07-24 11:06:21] SendGrid API Error: SendGrid API HTTP 401: {"errors":[{"message":"The requestor's IP Address is not whitelisted","field":null,"help":null}]}
+[2026-07-24 11:06:22] PHPMailer Error: SMTP Error: Could not authenticate.SMTP server error: QUIT command failed

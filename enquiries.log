@@ -198,3 +198,128 @@ Youtube
 
 ---------------------------------------
 
+[2026-07-24 09:52:08] New Enquiry from Antigravity Test (test@example.com)
+New Enquiry from Pellucid Frames Website
+=======================================
+
+Name: Antigravity Test
+Email: test@example.com
+Phone: Not provided
+Company: Not provided
+
+Project Scope:
+---------------------------------------
+Project Type: Brand Campaign
+Budget: Not provided
+Timeline: Not provided
+
+Message:
+---------------------------------------
+This is a diagnostic test run to verify the PHP contact form logic.
+
+Referral Source:
+---------------------------------------
+Not provided
+
+---------------------------------------
+
+[2026-07-24 09:56:00] New Enquiry from Hrithik Roshan (hrithikroshan@duggu.com)
+New Enquiry from Pellucid Frames Website
+=======================================
+
+Name: Hrithik Roshan
+Email: hrithikroshan@duggu.com
+Phone: 1234567890
+Company: Filmkraft
+
+Project Scope:
+---------------------------------------
+Project Type: Documentary
+Budget: $10k – $25k
+Timeline: 1 – 3 months
+
+Message:
+---------------------------------------
+Test
+
+Referral Source:
+---------------------------------------
+Test
+
+---------------------------------------
+
+[2026-07-24 10:50:56] New Enquiry from Local Test (local@test.com)
+New Enquiry from Pellucid Frames Website
+=======================================
+
+Name: Local Test
+Email: local@test.com
+Phone: 123
+Company: Acme
+
+Project Scope:
+---------------------------------------
+Project Type: Documentary
+Budget: Not sure yet
+Timeline: Flexible / exploring
+
+Message:
+---------------------------------------
+Local pipeline test — please ignore.
+
+Referral Source:
+---------------------------------------
+Test
+
+---------------------------------------
+
+[2026-07-24 11:06:21] New Enquiry from Claude Local Test (test-reply@example.com)
+New Enquiry from Pellucid Frames Website
+=======================================
+
+Name: Claude Local Test
+Email: test-reply@example.com
+Phone: +852 0000
+Company: Test Co
+
+Project Scope:
+---------------------------------------
+Project Type: Documentary
+Budget: Not sure yet
+Timeline: Flexible / exploring
+
+Message:
+---------------------------------------
+Local SendGrid delivery test — please ignore. If this arrives, the key + sender are working.
+
+Referral Source:
+---------------------------------------
+Local test
+
+---------------------------------------
+
+[2026-07-24 11:08:55] New Enquiry from Claude Local Test (test-reply@example.com)
+New Enquiry from Pellucid Frames Website
+=======================================
+
+Name: Claude Local Test
+Email: test-reply@example.com
+Phone: +852 0000
+Company: Test Co
+
+Project Scope:
+---------------------------------------
+Project Type: Documentary
+Budget: Not sure yet
+Timeline: Flexible / exploring
+
+Message:
+---------------------------------------
+Local SendGrid delivery test #2 — please ignore.
+
+Referral Source:
+---------------------------------------
+Local test
+
+---------------------------------------
+

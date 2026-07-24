@@ -5,3 +5,6 @@ node_modules/
 # never commit the exported site archive
 website-pellucid.zip
 *.zip
+
+# real SMTP secret — keep the key out of git (use smtp_config.example.php as the template)
+smtp_config.php

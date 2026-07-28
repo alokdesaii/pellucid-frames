@@ -11,5 +11,5 @@ return [
     'Port' => 587,
     'FromEmail' => 'info@pellucidframes.com',   // must be a verified sender in SendGrid
     'FromName' => 'Pellucid Frames Website',
-    'ToEmail' => 'alok.desai@harbourandhills.com'
+    'ToEmail' => 'hello@pellucidframes.com'
 ];

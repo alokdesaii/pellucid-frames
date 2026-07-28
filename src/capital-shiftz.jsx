@@ -269,6 +269,7 @@ function CapitalShiftzBody() {
 
       {/* Closing CTA */}
       <section className="cs-closing cs-inner">
+        <img className="cs-closing-logo" src="assets/capital-shiftz-logo.png" alt="Capital Shiftz" loading="lazy" />
         <div className="cs-closing-pre mono">New videos, every week</div>
         <h2 className="cs-closing-h" data-cs-reveal>
           Come <span className="cs-accent">understand</span> the markets with us.

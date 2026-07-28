@@ -24,7 +24,7 @@ No bundler, no framework CLI, no node runtime in production. The entire stack ru
 - **Component registration:** Each `src/*.jsx` file attaches itself to `window` (e.g., `Object.assign(window, { ScrollScene })`). This is how components reference each other across files — there are no ES module imports.
 - **Three.js (v0.160.0)** via CDN for WebGL contexts in `lightrays.jsx` (volumetric rays shader) and `bubble.jsx` (simplex noise plasma orb).
 - **`<image-slot>` custom element** (`src/image-slot.js`) — a vanilla Web Component for drag-and-drop image placement with crop/reframe. Persists state to `.image-slots.state.json` via `window.omelette` (a local dev file bridge). Slots appear as text labels in production.
-- **Contact Form Backend (`contact.php`)** — A lightweight PHP script that processes JSON payloads submitted by `src/contact.jsx`, validates a honeypot field for bot protection, and dispatches enquiries to `alok.desai@harbourandhills.com` using the host's `mail()` function.
+- **Contact Form Backend (`contact.php`)** — A lightweight PHP script that processes JSON payloads submitted by `src/contact.jsx`, validates a honeypot field for bot protection, and dispatches enquiries to `hello@pellucidframes.com`. Delivery is a 4-tier pipeline (SendGrid API → PHPMailer SMTP → native `mail()` → log to `enquiries.log`). SMTP/API credentials live in `smtp_config.php` (gitignored; see `smtp_config.example.php`).
 
 ### Pages
 
@@ -60,4 +60,4 @@ Full design and component math specs: `DESIGN.md` and `ARCHITECTURE.md`.
 
 - **Contact Form Conversion (July 2026):** Converted the contact form from an IT-managed JSON API setup to a local PHP form-to-email script (`contact.php`) that integrates with the React multi-step wizard.
   - Form endpoint configured to `contact.php` in `src/contact.jsx`.
-  - Created `contact.php` to handle sanitization, bot validation (honeypot), and email dispatching to `alok.desai@harbourandhills.com`.
+  - Created `contact.php` to handle sanitization, bot validation (honeypot), and email dispatching to `hello@pellucidframes.com`.

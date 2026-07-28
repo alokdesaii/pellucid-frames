@@ -269,6 +269,7 @@ function BloomyToonyBody() {
 
       {/* Closing CTA */}
       <section className="bt-closing bt-inner">
+        <img className="bt-closing-logo" src="assets/bloomy-toony-logo.png" alt="Bloomy Toony" loading="lazy" />
         <div className="bt-closing-pre mono">New stories, every week</div>
         <h2 className="bt-closing-h" data-bt-reveal>
           Come <span className="bt-accent">grow</span> up with us.

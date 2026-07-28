@@ -14,8 +14,8 @@ if (file_exists(__DIR__ . '/smtp_config.php')) {
     $smtp_config = require __DIR__ . '/smtp_config.php';
 }
 
-// Set target email address
-$to = isset($smtp_config['ToEmail']) ? $smtp_config['ToEmail'] : "alok.desai@harbourandhills.com";
+// Recipient — from server config (smtp_config.php ToEmail), with a matching fallback.
+$to = isset($smtp_config['ToEmail']) ? $smtp_config['ToEmail'] : "hello@pellucidframes.com";
 
 // Only accept POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
